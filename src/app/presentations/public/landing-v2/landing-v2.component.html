@@ -1,1 +1,565 @@
-<p>landing-v2 works!</p>
+<!-- Navigation Header -->
+<div class="fixed top-0 left-0 right-0 z-5 bg-white shadow-2">
+  <div class="grid p-3 m-0">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10 flex justify-content-between align-items-center">
+      <div class="flex align-items-center gap-3">
+        <div class="w-3rem h-3rem border-circle bg-gradient-to-r from-blue-500 to-purple-500 flex align-items-center justify-content-center">
+          <i class="pi pi-heart text-white text-xl"></i>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-900">ChildCare+</div>
+          <div class="text-sm text-600">Smart childcare management</div>
+        </div>
+      </div>
+      
+      <div class="hidden md:flex align-items-center gap-4">
+        <p-button 
+          label="Features" 
+          link="true" 
+          (click)="scrollToSection('features')"
+          class="text-700">
+        </p-button>
+        <p-button 
+          label="Pricing" 
+          link="true" 
+          (click)="scrollToSection('pricing')"
+          class="text-700">
+        </p-button>
+        <p-button 
+          label="Contact" 
+          link="true" 
+          (click)="contactUs()"
+          class="text-700">
+        </p-button>
+        <p-button 
+          label="Login" 
+          (click)="login()"
+          severity="secondary"
+          size="small">
+        </p-button>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<div #heroSection class="pt-8">
+  <div class="grid min-h-screen align-items-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="hero-content grid align-items-center">
+        <div class="col-12 md:col-6 text-center md:text-left p-4">
+          <div class="mb-4">
+            <p-chip 
+              label="🚀 Trusted by 500+ facilities" 
+              class="bg-white-alpha-20 text-white">
+            </p-chip>
+          </div>
+          
+          <h1 class="text-6xl md:text-7xl font-bold text-white mb-4 line-height-2">
+            The Future of
+            <span class="text-yellow-300">Childcare</span>
+            Management
+          </h1>
+          
+          <p class="text-xl text-white-alpha-90 mb-6 line-height-3">
+            Streamline operations, enhance parent communication, and ensure child safety with our AI-powered platform designed specifically for modern childcare facilities.
+          </p>
+          
+          <div class="flex flex-column md:flex-row gap-3 mb-6">
+            <p-button 
+              label="Start Free Trial" 
+              icon="pi pi-play" 
+              size="large"
+              class="bg-white text-primary hover:bg-gray-100"
+              (click)="requestDemo()">
+            </p-button>
+            <p-button 
+              label="Watch Demo" 
+              icon="pi pi-video" 
+              outlined="true" 
+              size="large"
+              class="text-white border-white hover:bg-white-alpha-10">
+            </p-button>
+          </div>
+          
+          <div class="flex flex-wrap gap-4 justify-content-center md:justify-content-start">
+            <div *ngFor="let stat of stats" class="text-center">
+              <div class="text-3xl font-bold text-white">{{ stat.value }}</div>
+              <div class="text-sm text-white-alpha-80">{{ stat.label }}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12 md:col-6 p-4">
+          <div class="relative">
+            <div class="border-round-xl overflow-hidden shadow-4">
+              <img 
+                src="assets/mockups/cta_prototype.png" 
+                alt="ChildCare+ Dashboard" 
+                class="w-full h-auto">
+            </div>
+            
+            <!-- Floating cards for visual appeal -->
+            <div class="absolute -top-3 -right-3 w-4rem h-4rem border-circle bg-yellow-400 flex align-items-center justify-content-center shadow-3">
+              <i class="pi pi-star-fill text-yellow-900"></i>
+            </div>
+            <div class="absolute -bottom-3 -left-3 w-5rem h-3rem border-round bg-green-400 flex align-items-center justify-content-center shadow-3">
+              <span class="text-sm font-bold text-green-900">Safe & Secure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div #featuresSection id="features" class="py-8 bg-gray-50">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="text-center mb-6">
+        <h2 class="text-5xl font-bold text-900 mb-3">
+          Everything You Need to Excel
+        </h2>
+        <p class="text-xl text-600 max-w-30rem mx-auto">
+          Comprehensive tools designed to make childcare management effortless and effective
+        </p>
+      </div>
+      
+      <div class="grid">
+        <div *ngFor="let feature of features; let i = index" class="col-12 md:col-6 lg:col-4 p-3">
+          <div class="feature-card card h-full hover:shadow-4 transition-all transition-duration-300 cursor-pointer border-1 border-transparent hover:border-primary-200">
+            <div class="p-4">
+              <div class="flex align-items-center mb-3">
+                <div [class]="'w-3rem h-3rem border-circle flex align-items-center justify-content-center ' + feature.color">
+                  <i [class]="feature.icon + ' text-xl'"></i>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-xl font-semibold text-900 mb-0">{{ feature.title }}</h3>
+                </div>
+              </div>
+              <p class="text-600 line-height-3 m-0">{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="py-8">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="text-center mb-6">
+        <h2 class="text-5xl font-bold text-900 mb-3">
+          Get Started in Minutes
+        </h2>
+        <p class="text-xl text-600">
+          Simple setup, powerful results
+        </p>
+      </div>
+      
+      <div class="grid align-items-center">
+        <div class="col-12 lg:col-6">
+          <p-timeline 
+            [value]="[
+              { title: 'Sign Up & Setup', subtitle: 'Create your account and configure basic settings', icon: 'pi pi-user-plus', color: '#FF6B6B' },
+              { title: 'Import Your Data', subtitle: 'Upload child profiles, staff info, and existing schedules', icon: 'pi pi-upload', color: '#4ECDC4' },
+              { title: 'Invite Parents', subtitle: 'Send invitations to parents for the mobile app', icon: 'pi pi-send', color: '#45B7D1' },
+              { title: 'Go Live!', subtitle: 'Start managing your facility with confidence', icon: 'pi pi-check-circle', color: '#96CEB4' }
+            ]"
+            layout="vertical">
+            
+            <ng-template pTemplate="marker" let-event>
+              <span [style]="'background-color: ' + event.color" class="flex w-2rem h-2rem align-items-center justify-content-center text-white border-circle z-1 shadow-2">
+                <i [class]="event.icon"></i>
+              </span>
+            </ng-template>
+            
+            <ng-template pTemplate="content" let-event>
+              <div class="card p-3 shadow-2 border-round ml-3">
+                <h4 class="text-900 font-semibold mb-2">{{ event.title }}</h4>
+                <p class="text-600 m-0">{{ event.subtitle }}</p>
+              </div>
+            </ng-template>
+          </p-timeline>
+        </div>
+        
+        <div class="col-12 lg:col-6 text-center">
+          <div class="border-round-xl p-6 bg-gradient-to-r from-blue-50 to-purple-50">
+            <i class="pi pi-mobile text-6xl text-primary mb-4"></i>
+            <h3 class="text-2xl font-bold text-900 mb-3">Mobile App Included</h3>
+            <p class="text-600 mb-4">
+              Parents get real-time updates, photos, and communication through our beautiful mobile app.
+            </p>
+            <div class="flex justify-content-center gap-2">
+              <p-button label="App Store" icon="pi pi-apple" severity="secondary" size="small"></p-button>
+              <p-button label="Play Store" icon="pi pi-android" severity="secondary" size="small"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="py-8 bg-gradient-to-r from-indigo-50 to-blue-50">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="text-center mb-6">
+        <h2 class="text-5xl font-bold text-900 mb-3">
+          Loved by Childcare Professionals
+        </h2>
+        <p class="text-xl text-600">
+          See what our customers are saying
+        </p>
+      </div>
+      
+      <div class="grid">
+        <div *ngFor="let testimonial of testimonials" class="col-12 md:col-4 p-3">
+          <div class="card h-full shadow-3 border-round-xl">
+            <div class="p-4">
+              <div class="flex align-items-center mb-3">
+                <p-avatar 
+                  [label]="testimonial.avatar" 
+                  shape="circle" 
+                  size="large"
+                  class="bg-primary text-white mr-3">
+                </p-avatar>
+                <div>
+                  <div class="font-semibold text-900">{{ testimonial.name }}</div>
+                  <div class="text-sm text-600">{{ testimonial.role }}</div>
+                </div>
+              </div>
+              
+              <div class="flex mb-3">
+                <i *ngFor="let star of getStars(testimonial.rating)" [class]="star + ' text-yellow-500 mr-1'"></i>
+              </div>
+              
+              <p class="text-600 line-height-3 m-0">
+                "{{ testimonial.message }}"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Pricing Section -->
+<div id="pricing" class="py-8">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="text-center mb-6">
+        <h2 class="text-5xl font-bold text-900 mb-3">
+          Simple, Transparent Pricing
+        </h2>
+        <p class="text-xl text-600">
+          Choose the plan that fits your facility's needs
+        </p>
+      </div>
+      
+      <div class="grid">
+        <div *ngFor="let plan of pricingPlans" class="col-12 md:col-4 p-3">
+          <div [class]="'card h-full text-center position-relative border-2 ' + plan.color + (plan.popular ? ' shadow-4' : ' shadow-2')">
+            <div *ngIf="plan.popular" class="absolute top-0 right-0 bg-purple-500 text-white px-3 py-1 border-round-bl-xl text-sm font-semibold">
+              Most Popular
+            </div>
+            
+            <div class="p-5">
+              <h3 class="text-2xl font-bold text-900 mb-2">{{ plan.name }}</h3>
+              <p class="text-600 mb-4">{{ plan.description }}</p>
+              
+              <div class="mb-4">
+                <span class="text-5xl font-bold text-900">${{ plan.price }}</span>
+                <span class="text-600">/ {{ plan.period }}</span>
+              </div>
+              
+              <p-button 
+                [label]="plan.popular ? 'Start Free Trial' : 'Get Started'" 
+                [severity]="plan.popular ? 'primary' : 'secondary'"
+                class="w-full mb-4"
+                (click)="requestDemo()">
+              </p-button>
+              
+              <ul class="list-none p-0 m-0 text-left">
+                <li *ngFor="let feature of plan.features" class="flex align-items-center mb-2">
+                  <i class="pi pi-check text-green-600 mr-2"></i>
+                  <span class="text-600">{{ feature }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div class="py-8 bg-gradient-to-r from-purple-600 to-blue-600">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10 text-center">
+      <h2 class="text-5xl font-bold text-white mb-3">
+        Ready to Transform Your Childcare Facility?
+      </h2>
+      <p class="text-xl text-white-alpha-90 mb-6 max-w-40rem mx-auto">
+        Join hundreds of childcare facilities already using ChildCare+ to provide better care and communication.
+      </p>
+      
+      <div class="flex flex-column md:flex-row gap-3 justify-content-center">
+        <p-button 
+          label="Start 30-Day Free Trial" 
+          icon="pi pi-play" 
+          size="large"
+          class="bg-white text-primary hover:bg-gray-100"
+          (click)="requestDemo()">
+        </p-button>
+        <p-button 
+          label="Schedule a Demo" 
+          icon="pi pi-calendar" 
+          outlined="true" 
+          size="large"
+          class="text-white border-white hover:bg-white-alpha-10"
+          (click)="requestDemo()">
+        </p-button>
+      </div>
+      
+      <p class="text-sm text-white-alpha-80 mt-4">
+        No credit card required • Setup in under 5 minutes • Cancel anytime
+      </p>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="py-6 bg-gray-900 text-white">
+  <div class="grid">
+    <div class="col-1 hidden lg:block"></div>
+    <div class="col-12 lg:col-10">
+      <div class="grid">
+        <div class="col-12 md:col-4 mb-4">
+          <div class="flex align-items-center gap-3 mb-3">
+            <div class="w-2rem h-2rem border-circle bg-gradient-to-r from-blue-500 to-purple-500 flex align-items-center justify-content-center">
+              <i class="pi pi-heart text-white"></i>
+            </div>
+            <div class="text-xl font-bold">ChildCare+</div>
+          </div>
+          <p class="text-gray-400 line-height-3">
+            Empowering childcare facilities with smart technology to provide exceptional care and communication.
+          </p>
+        </div>
+        
+        <div class="col-12 md:col-2 mb-4">
+          <h4 class="font-semibold mb-3">Product</h4>
+          <ul class="list-none p-0 m-0">
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Features</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Pricing</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Security</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-12 md:col-2 mb-4">
+          <h4 class="font-semibold mb-3">Support</h4>
+          <ul class="list-none p-0 m-0">
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Help Center</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Contact</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Training</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-12 md:col-2 mb-4">
+          <h4 class="font-semibold mb-3">Company</h4>
+          <ul class="list-none p-0 m-0">
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">About</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Blog</a></li>
+            <li class="mb-2"><a href="#" class="text-gray-400 hover:text-white no-underline">Careers</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-12 md:col-2">
+          <h4 class="font-semibold mb-3">Connect</h4>
+          <div class="flex gap-2">
+            <p-button icon="pi pi-twitter" severity="secondary" text="true" rounded="true"></p-button>
+            <p-button icon="pi pi-facebook" severity="secondary" text="true" rounded="true"></p-button>
+            <p-button icon="pi pi-linkedin" severity="secondary" text="true" rounded="true"></p-button>
+          </div>
+        </div>
+      </div>
+      
+      <p-divider></p-divider>
+      
+      <div class="flex flex-column md:flex-row justify-content-between align-items-center">
+        <p class="text-gray-400 m-0">
+          © 2025 ChildCare+. All rights reserved.
+        </p>
+        <div class="flex gap-4 mt-3 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white no-underline text-sm">Privacy Policy</a>
+          <a href="#" class="text-gray-400 hover:text-white no-underline text-sm">Terms of Service</a>
+          <a href="#" class="text-gray-400 hover:text-white no-underline text-sm">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 hidden lg:block"></div>
+  </div>
+</div>
+
+<!-- Demo Request Modal -->
+<p-dialog 
+  header="Request a Demo" 
+  [(visible)]="showDemoModal" 
+  [modal]="true" 
+  [style]="{width: '450px'}"
+  [closable]="true">
+  
+  <form [formGroup]="demoForm" (ngSubmit)="submitDemo()">
+    <div class="grid">
+      <div class="col-12 mb-3">
+        <label for="demo-name" class="block text-900 font-medium mb-2">Full Name</label>
+        <input 
+          id="demo-name" 
+          type="text" 
+          pInputText 
+          formControlName="name"
+          class="w-full"
+          placeholder="Enter your full name">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="demo-email" class="block text-900 font-medium mb-2">Email Address</label>
+        <input 
+          id="demo-email" 
+          type="email" 
+          pInputText 
+          formControlName="email"
+          class="w-full"
+          placeholder="Enter your email">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="demo-facility" class="block text-900 font-medium mb-2">Facility Name</label>
+        <input 
+          id="demo-facility" 
+          type="text" 
+          pInputText 
+          formControlName="facility"
+          class="w-full"
+          placeholder="Enter facility name">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="demo-children" class="block text-900 font-medium mb-2">Number of Children</label>
+        <input 
+          id="demo-children" 
+          type="number" 
+          pInputText 
+          formControlName="children"
+          class="w-full"
+          placeholder="Approximate number">
+      </div>
+    </div>
+    
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (click)="showDemoModal = false"
+        type="button">
+      </p-button>
+      <p-button 
+        label="Schedule Demo" 
+        type="submit"
+        [disabled]="!demoForm.valid">
+      </p-button>
+    </div>
+  </form>
+</p-dialog>
+
+<!-- Contact Modal -->
+<p-dialog 
+  header="Contact Us" 
+  [(visible)]="showContactModal" 
+  [modal]="true" 
+  [style]="{width: '500px'}"
+  [closable]="true">
+  
+  <form [formGroup]="contactForm" (ngSubmit)="submitContact()">
+    <div class="grid">
+      <div class="col-12 mb-3">
+        <label for="contact-name" class="block text-900 font-medium mb-2">Full Name</label>
+        <input 
+          id="contact-name" 
+          type="text" 
+          pInputText 
+          formControlName="name"
+          class="w-full"
+          placeholder="Enter your full name">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="contact-email" class="block text-900 font-medium mb-2">Email Address</label>
+        <input 
+          id="contact-email" 
+          type="email" 
+          pInputText 
+          formControlName="email"
+          class="w-full"
+          placeholder="Enter your email">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="contact-facility" class="block text-900 font-medium mb-2">Facility Name</label>
+        <input 
+          id="contact-facility" 
+          type="text" 
+          pInputText 
+          formControlName="facility"
+          class="w-full"
+          placeholder="Enter facility name">
+      </div>
+      
+      <div class="col-12 mb-3">
+        <label for="contact-message" class="block text-900 font-medium mb-2">Message</label>
+        <textarea 
+          id="contact-message" 
+          pInputTextarea 
+          formControlName="message"
+          class="w-full"
+          rows="4"
+          placeholder="How can we help you?">
+        </textarea>
+      </div>
+    </div>
+    
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button 
+        label="Cancel" 
+        severity="secondary" 
+        (click)="showContactModal = false"
+        type="button">
+      </p-button>
+      <p-button 
+        label="Send Message" 
+        type="submit"
+        [disabled]="!contactForm.valid">
+      </p-button>
+    </div>
+  </form>
+</p-dialog>

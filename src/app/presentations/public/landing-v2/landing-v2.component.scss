@@ -1,0 +1,67 @@
+// Gradient utilities since PrimeFlex doesn't include all gradients
+.bg-gradient-to-r {
+  &.from-blue-500.to-purple-500 {
+    background: linear-gradient(to right, #3B82F6, #8B5CF6);
+  }
+  
+  &.from-blue-50.to-purple-50 {
+    background: linear-gradient(to right, #EFF6FF, #FAF5FF);
+  }
+  
+  &.from-indigo-50.to-blue-50 {
+    background: linear-gradient(to right, #EEF2FF, #EFF6FF);
+  }
+  
+  &.from-purple-600.to-blue-600 {
+    background: linear-gradient(to right, #9333EA, #2563EB);
+  }
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Hero section height adjustment
+.min-h-screen {
+  min-height: calc(100vh - 80px); // Account for fixed header
+}
+
+// Animation utilities
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.hover\:shadow-4:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+// Custom positioning for floating elements
+.absolute {
+  position: absolute;
+}
+
+.-top-3 {
+  top: -0.75rem;
+}
+
+.-right-3 {
+  right: -0.75rem;
+}
+
+.-bottom-3 {
+  bottom: -0.75rem;
+}
+
+.-left-3 {
+  left: -0.75rem;
+}
+
+// Z-index utilities
+.z-1 {
+  z-index: 1;
+}
+
+.z-5 {
+  z-index: 5;
+}
