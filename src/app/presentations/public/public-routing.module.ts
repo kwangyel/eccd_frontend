@@ -5,13 +5,14 @@ import { PublicLaunchSequenceComponent } from './public-launch-sequence/public-l
 import { PublicRentalListingsComponent } from './public-rental-listings/public-rental-listings.component';
 import { BrandZhidhayComponent } from './brand-zhidhay/brand-zhidhay.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
             {
                 path: '',
-                component: PublicHomeComponent,
+                component: LandingComponent
             },
             // {
             //     path: 'launch',
