@@ -1,192 +1,511 @@
-<div class="min-h-screen surface-ground">
+<div class="landing-container">
 	<p-toast position="top-right"></p-toast>
 
-	<!-- Hero -->
-	<div class="px-3 md:px-6 lg:px-8 py-5 md:py-6 lg:py-8">
-		<div class="flex flex-column md:flex-row align-items-center justify-content-between gap-5">
-			<div class="flex-1">
-				<div class="flex align-items-center gap-2 mb-3 cursor-pointer" routerLink="/">
-					<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
-					<span class="text-3xl md:text-4xl font-bold text-primary">Zhidhay</span>
-				</div>
-
-				<h1 class="text-4xl md:text-6xl font-bold line-height-2">All-in-one Childcare Management</h1>
-				<p class="mt-3 text-700 text-lg md:text-xl">Manage attendance, billing, messaging, and family engagement in one beautiful workspace. Inspired by best-in-class tools you already love.</p>
-
-				<div class="flex gap-3 mt-4">
-					<button pButton pRipple label="Request a demo" class="p-button-lg" (click)="openDemo()"></button>
-					<a routerLink="/auth/login" pButton pRipple label="Login" class="p-button-outlined p-button-lg"></a>
-				</div>
-
-				<div class="flex align-items-center gap-3 mt-4 text-600">
-					<i class="pi pi-shield text-green-500"></i>
-					<span>Secure • Cloud-hosted • Works on any device</span>
-				</div>
+	<!-- Navigation -->
+	<nav class="navigation">
+		<div class="nav-content">
+			<div class="flex align-items-center gap-2 cursor-pointer" routerLink="/">
+				<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
+				<span class="text-2xl font-bold text-primary">Zhidhay</span>
 			</div>
-
-			<div class="flex-1 w-full">
-				<p-card class="w-full shadow-3">
-					<ng-template pTemplate="header">
-						<div class="flex align-items-center justify-content-between">
-							<span class="font-semibold">Daily Snapshot</span>
-							<span class="text-600 text-sm">Live</span>
-						</div>
-					</ng-template>
-					<div class="grid">
-						<div class="col-12 md:col-6">
-							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
-								<div>
-									<p class="m-0 text-600">Check-ins</p>
-									<h3 class="m-0">42</h3>
-								</div>
-								<i class="pi pi-user-plus text-2xl text-primary"></i>
-							</div>
-						</div>
-						<div class="col-12 md:col-6">
-							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
-								<div>
-									<p class="m-0 text-600">Messages</p>
-									<h3 class="m-0">128</h3>
-								</div>
-								<i class="pi pi-comments text-2xl text-primary"></i>
-							</div>
-						</div>
-						<div class="col-12 md:col-6">
-							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
-								<div>
-									<p class="m-0 text-600">Invoices</p>
-									<h3 class="m-0">BDN 5.3k</h3>
-								</div>
-								<i class="pi pi-credit-card text-2xl text-primary"></i>
-							</div>
-						</div>
-						<div class="col-12 md:col-6">
-							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
-								<div>
-									<p class="m-0 text-600">Staff</p>
-									<h3 class="m-0">12 on duty</h3>
-								</div>
-								<i class="pi pi-briefcase text-2xl text-primary"></i>
-							</div>
-						</div>
-					</div>
-				</p-card>
+			<div class="nav-actions">
+				<a routerLink="/auth/login" pButton pRipple label="Login" class="p-button-text p-button-plain"></a>
+				<button pButton pRipple label="Get Started" class="cta-button" (click)="openDemo()"></button>
 			</div>
 		</div>
-	</div>
+	</nav>
 
-	<p-divider></p-divider>
-
-	<!-- Logos / social proof -->
-	<div class="px-3 md:px-6 lg:px-8 py-4">
-		<div class="text-center text-600">Trusted by centers and parents</div>
-		<div class="flex flex-wrap align-items-center justify-content-center gap-5 mt-3">
-			<img src="assets/partners/bt.png" class="h-2rem opacity-80" alt="bt">
-			<img src="assets/partners/gny.png" class="h-2rem opacity-80" alt="gny">
-			<img src="assets/partners/tashicell.png" class="h-2rem opacity-80" alt="tc">
-			<img src="assets/partners/bob.svg" class="h-2rem opacity-80" alt="bob">
-			<img src="assets/partners/rma.png" class="h-2rem opacity-80" alt="rma">
-		</div>
-	</div>
-
-	<!-- Features -->
-	<div class="px-3 md:px-6 lg:px-8 py-6">
-		<div class="grid">
-			<div class="col-12 md:col-4">
-				<p-card class="h-full">
-					<div class="flex align-items-start gap-3">
-						<i class="pi pi-calendar text-3xl text-primary"></i>
-						<div>
-							<h3 class="m-0">Attendance & Check-in</h3>
-							<p class="m-0 text-700 mt-2">Fast kiosk check-in with secure codes and real-time rosters.</p>
-						</div>
-					</div>
-				</p-card>
-			</div>
-			<div class="col-12 md:col-4">
-				<p-card class="h-full">
-					<div class="flex align-items-start gap-3">
-						<i class="pi pi-credit-card text-3xl text-primary"></i>
-						<div>
-							<h3 class="m-0">Billing & Invoicing</h3>
-							<p class="m-0 text-700 mt-2">Automate tuition, accept online payments, and reconcile with ease.</p>
-						</div>
-					</div>
-				</p-card>
-			</div>
-			<div class="col-12 md:col-4">
-				<p-card class="h-full">
-					<div class="flex align-items-start gap-3">
-						<i class="pi pi-comments text-3xl text-primary"></i>
-						<div>
-							<h3 class="m-0">Parent Messaging</h3>
-							<p class="m-0 text-700 mt-2">Share updates, photos, and reminders securely with families.</p>
-						</div>
-					</div>
-				</p-card>
-			</div>
-		</div>
-	</div>
-
-	<!-- Testimonial / CTA -->
-	<div class="px-3 md:px-6 lg:px-8 py-6">
-		<p-card>
-			<div class="grid align-items-center">
-				<div class="col-12 md:col-8">
-					<p class="text-xl md:text-2xl m-0">“We spend less time on admin and more time with children. The app is intuitive for our staff and parents alike.”</p>
-					<p class="mt-2 text-700">Center Director, Happy Kids</p>
+	<!-- Hero Section -->
+	<section class="hero-section">
+		<div class="hero-content">
+			<div class="hero-text">
+				<div class="hero-badge">
+					<i class="pi pi-star-fill text-yellow-400"></i>
+					<span>Trusted by 500+ childcare centers</span>
 				</div>
-				<div class="col-12 md:col-4 flex align-items-center justify-content-end gap-2">
-					<a routerLink="/auth/login" pButton label="Login" class="p-button-outlined"></a>
-					<button pButton label="Get a demo" (click)="openDemo()"></button>
+				
+				<h1 class="hero-title">
+					The Future of 
+					<span class="gradient-text">Childcare Management</span>
+					is Here
+				</h1>
+				
+				<p class="hero-description">
+					Transform your childcare operations with our all-in-one platform. 
+					Streamline attendance, billing, communication, and family engagement 
+					with intuitive tools designed for modern childcare centers.
+				</p>
+
+				<div class="hero-actions">
+					<button pButton pRipple label="Start Free Trial" class="primary-button" (click)="openDemo()">
+						<i class="pi pi-play-circle"></i>
+					</button>
+					<button pButton pRipple label="Watch Demo" class="secondary-button">
+						<i class="pi pi-video"></i>
+					</button>
+				</div>
+
+				<div class="hero-features">
+					<div class="feature-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>No setup fees</span>
+					</div>
+					<div class="feature-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>Cancel anytime</span>
+					</div>
+					<div class="feature-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>24/7 support</span>
+					</div>
 				</div>
 			</div>
-		</p-card>
-	</div>
+
+			<div class="hero-visual">
+				<div class="dashboard-preview">
+					<div class="preview-header">
+						<div class="preview-dots">
+							<span class="dot red"></span>
+							<span class="dot yellow"></span>
+							<span class="dot green"></span>
+						</div>
+						<span class="preview-title">Zhidhay Dashboard</span>
+						<div class="live-indicator">
+							<span class="pulse-dot"></span>
+							<span class="text-sm">Live</span>
+						</div>
+					</div>
+					
+					<div class="preview-content">
+						<div class="stats-grid">
+							<div class="stat-card primary">
+								<div class="stat-icon">
+									<i class="pi pi-users"></i>
+								</div>
+								<div class="stat-info">
+									<span class="stat-label">Active Children</span>
+									<span class="stat-value">156</span>
+									<span class="stat-change positive">+12%</span>
+								</div>
+							</div>
+							
+							<div class="stat-card success">
+								<div class="stat-icon">
+									<i class="pi pi-check-circle"></i>
+								</div>
+								<div class="stat-info">
+									<span class="stat-label">Check-ins Today</span>
+									<span class="stat-value">142</span>
+									<span class="stat-change positive">+8%</span>
+								</div>
+							</div>
+							
+							<div class="stat-card warning">
+								<div class="stat-icon">
+									<i class="pi pi-credit-card"></i>
+								</div>
+								<div class="stat-info">
+									<span class="stat-label">Revenue</span>
+									<span class="stat-value">₹85.2k</span>
+									<span class="stat-change positive">+15%</span>
+								</div>
+							</div>
+							
+							<div class="stat-card info">
+								<div class="stat-icon">
+									<i class="pi pi-comments"></i>
+								</div>
+								<div class="stat-info">
+									<span class="stat-label">Messages</span>
+									<span class="stat-value">234</span>
+									<span class="stat-change positive">+23%</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="activity-feed">
+							<div class="activity-item">
+								<div class="activity-avatar">👧</div>
+								<div class="activity-content">
+									<span class="activity-text">Emma Johnson checked in at 8:30 AM</span>
+									<span class="activity-time">2 min ago</span>
+								</div>
+							</div>
+							<div class="activity-item">
+								<div class="activity-avatar">👨‍🏫</div>
+								<div class="activity-content">
+									<span class="activity-text">Teacher Sarah sent daily report</span>
+									<span class="activity-time">5 min ago</span>
+								</div>
+							</div>
+							<div class="activity-item">
+								<div class="activity-avatar">💰</div>
+								<div class="activity-content">
+									<span class="activity-text">Payment received from Miller family</span>
+									<span class="activity-time">10 min ago</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Social Proof -->
+	<section class="social-proof-section">
+		<div class="section-container">
+			<p class="social-proof-text">Trusted by leading childcare centers worldwide</p>
+			<div class="partners-grid">
+				<div class="partner-item">
+					<img src="assets/partners/bt.png" alt="BT" class="partner-logo">
+				</div>
+				<div class="partner-item">
+					<img src="assets/partners/gny.png" alt="GNY" class="partner-logo">
+				</div>
+				<div class="partner-item">
+					<img src="assets/partners/tashicell.png" alt="Tashicell" class="partner-logo">
+				</div>
+				<div class="partner-item">
+					<img src="assets/partners/bob.svg" alt="BOB" class="partner-logo">
+				</div>
+				<div class="partner-item">
+					<img src="assets/partners/rma.png" alt="RMA" class="partner-logo">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Section -->
+	<section class="features-section">
+		<div class="section-container">
+			<div class="section-header">
+				<h2 class="section-title">Everything you need to run your childcare center</h2>
+				<p class="section-description">
+					Powerful features designed to simplify operations and enhance parent satisfaction
+				</p>
+			</div>
+
+			<div class="features-grid">
+				<div class="feature-card">
+					<div class="feature-icon attendance">
+						<i class="pi pi-calendar"></i>
+					</div>
+					<h3 class="feature-title">Smart Attendance</h3>
+					<p class="feature-description">
+						Lightning-fast check-in/check-out with QR codes, facial recognition, 
+						and real-time parent notifications.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> QR code scanning</li>
+						<li><i class="pi pi-check"></i> Photo verification</li>
+						<li><i class="pi pi-check"></i> Automated alerts</li>
+					</ul>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon billing">
+						<i class="pi pi-credit-card"></i>
+					</div>
+					<h3 class="feature-title">Automated Billing</h3>
+					<p class="feature-description">
+						Generate invoices, process payments, and manage finances with 
+						integrated payment gateways and detailed reporting.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> Recurring invoices</li>
+						<li><i class="pi pi-check"></i> Multiple payment methods</li>
+						<li><i class="pi pi-check"></i> Financial reports</li>
+					</ul>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon communication">
+						<i class="pi pi-comments"></i>
+					</div>
+					<h3 class="feature-title">Parent Communication</h3>
+					<p class="feature-description">
+						Keep parents engaged with daily reports, photos, messages, 
+						and milestone tracking in a secure environment.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> Daily activity reports</li>
+						<li><i class="pi pi-check"></i> Photo & video sharing</li>
+						<li><i class="pi pi-check"></i> Push notifications</li>
+					</ul>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon analytics">
+						<i class="pi pi-chart-line"></i>
+					</div>
+					<h3 class="feature-title">Analytics & Insights</h3>
+					<p class="feature-description">
+						Make data-driven decisions with comprehensive analytics, 
+						enrollment trends, and operational insights.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> Enrollment tracking</li>
+						<li><i class="pi pi-check"></i> Revenue analytics</li>
+						<li><i class="pi pi-check"></i> Custom reports</li>
+					</ul>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon staff">
+						<i class="pi pi-users"></i>
+					</div>
+					<h3 class="feature-title">Staff Management</h3>
+					<p class="feature-description">
+						Manage schedules, track qualifications, and streamline 
+						communication among your team members.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> Shift scheduling</li>
+						<li><i class="pi pi-check"></i> Certification tracking</li>
+						<li><i class="pi pi-check"></i> Performance metrics</li>
+					</ul>
+				</div>
+
+				<div class="feature-card">
+					<div class="feature-icon security">
+						<i class="pi pi-shield"></i>
+					</div>
+					<h3 class="feature-title">Security & Compliance</h3>
+					<p class="feature-description">
+						Bank-level security with role-based access, data encryption, 
+						and compliance with childcare regulations.
+					</p>
+					<ul class="feature-list">
+						<li><i class="pi pi-check"></i> 256-bit encryption</li>
+						<li><i class="pi pi-check"></i> Role-based access</li>
+						<li><i class="pi pi-check"></i> Audit trails</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonial Section -->
+	<section class="testimonial-section">
+		<div class="section-container">
+			<div class="testimonial-content">
+				<div class="testimonial-card">
+					<div class="testimonial-header">
+						<div class="stars">
+							<i class="pi pi-star-fill text-yellow-400"></i>
+							<i class="pi pi-star-fill text-yellow-400"></i>
+							<i class="pi pi-star-fill text-yellow-400"></i>
+							<i class="pi pi-star-fill text-yellow-400"></i>
+							<i class="pi pi-star-fill text-yellow-400"></i>
+						</div>
+						<span class="rating-text">5.0 out of 5 stars</span>
+					</div>
+					
+					<blockquote class="testimonial-quote">
+						"Zhidhay has completely transformed how we operate. Our staff saves 3+ hours daily 
+						on administrative tasks, and parents love the real-time updates. The ROI was immediate."
+					</blockquote>
+					
+					<div class="testimonial-author">
+						<div class="author-avatar">
+							<img src="https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=60&h=60&fit=crop&crop=face" alt="Sarah Chen">
+						</div>
+						<div class="author-info">
+							<div class="author-name">Sarah Chen</div>
+							<div class="author-title">Director, Little Explorers Childcare</div>
+							<div class="author-company">150+ children • 3 locations</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="cta-section">
+					<h3 class="cta-title">Ready to transform your childcare center?</h3>
+					<p class="cta-description">Join hundreds of centers already using Zhidhay to streamline operations and delight families.</p>
+					
+					<div class="cta-actions">
+						<button pButton pRipple label="Start Free Trial" class="primary-button large" (click)="openDemo()">
+							<i class="pi pi-arrow-right"></i>
+						</button>
+						<a routerLink="/auth/login" pButton pRipple label="Sign In" class="secondary-button large"></a>
+					</div>
+					
+					<div class="cta-features">
+						<div class="cta-feature">
+							<i class="pi pi-check-circle text-green-500"></i>
+							<span>14-day free trial</span>
+						</div>
+						<div class="cta-feature">
+							<i class="pi pi-check-circle text-green-500"></i>
+							<span>No credit card required</span>
+						</div>
+						<div class="cta-feature">
+							<i class="pi pi-check-circle text-green-500"></i>
+							<span>Setup assistance included</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<!-- Footer -->
-	<div class="px-3 md:px-6 lg:px-8 py-5 surface-50">
-		<div class="flex flex-column md:flex-row align-items-center justify-content-between gap-3">
-			<div class="flex align-items-center gap-2">
-				<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
-				<span class="font-semibold">Zhidhay</span>
+	<footer class="footer-section">
+		<div class="section-container">
+			<div class="footer-content">
+				<div class="footer-brand">
+					<div class="brand-logo">
+						<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
+						<span class="brand-name">Zhidhay</span>
+					</div>
+					<p class="brand-description">
+						The modern childcare management platform trusted by centers worldwide.
+					</p>
+					<div class="social-links">
+						<a href="#" class="social-link">
+							<i class="pi pi-twitter"></i>
+						</a>
+						<a href="#" class="social-link">
+							<i class="pi pi-facebook"></i>
+						</a>
+						<a href="#" class="social-link">
+							<i class="pi pi-linkedin"></i>
+						</a>
+						<a href="#" class="social-link">
+							<i class="pi pi-instagram"></i>
+						</a>
+					</div>
+				</div>
+				
+				<div class="footer-links">
+					<div class="link-group">
+						<h4 class="link-title">Product</h4>
+						<a href="#" class="footer-link">Features</a>
+						<a href="#" class="footer-link">Pricing</a>
+						<a href="#" class="footer-link">Demo</a>
+						<a href="#" class="footer-link">API</a>
+					</div>
+					
+					<div class="link-group">
+						<h4 class="link-title">Resources</h4>
+						<a href="#" class="footer-link">Help Center</a>
+						<a href="#" class="footer-link">Blog</a>
+						<a href="#" class="footer-link">Guides</a>
+						<a href="#" class="footer-link">Webinars</a>
+					</div>
+					
+					<div class="link-group">
+						<h4 class="link-title">Company</h4>
+						<a href="#" class="footer-link">About</a>
+						<a href="#" class="footer-link">Careers</a>
+						<a href="#" class="footer-link">Contact</a>
+						<a routerLink="/privacy" class="footer-link">Privacy</a>
+					</div>
+				</div>
 			</div>
-			<div class="flex gap-3 text-600">
-			<a routerLink="/privacy" class="no-underline text-600 hover:text-primary">Privacy</a>
-			<span>•</span>
-			<span>© {{ year }}</span>
+			
+			<div class="footer-bottom">
+				<p class="copyright">© {{ year }} Zhidhay. All rights reserved.</p>
+				<div class="footer-badges">
+					<span class="security-badge">
+						<i class="pi pi-shield text-green-500"></i>
+						SOC 2 Compliant
+					</span>
+					<span class="security-badge">
+						<i class="pi pi-lock text-blue-500"></i>
+						GDPR Ready
+					</span>
+				</div>
 			</div>
 		</div>
-	</div>
-
-	<!-- Demo Dialog -->
-	<p-dialog [(visible)]="demoVisible" [modal]="true" [style]="{width: '35rem'}" header="Request a demo">
-		<div class="grid formgrid">
-			<div class="field col-12 md:col-6">
-				<label class="block mb-2">Name</label>
-				<input pInputText [(ngModel)]="demoForm.name" placeholder="Your name" />
+	</footer>	<!-- Demo Dialog -->
+	<p-dialog [(visible)]="demoVisible" [modal]="true" [style]="{width: '600px'}" [header]="false" class="demo-dialog">
+		<div class="demo-dialog-content">
+			<div class="dialog-header">
+				<h2 class="dialog-title">Start Your Free Trial</h2>
+				<p class="dialog-subtitle">Get started with Zhidhay today. No credit card required.</p>
 			</div>
-			<div class="field col-12 md:col-6">
-				<label class="block mb-2">Email</label>
-				<input pInputText [(ngModel)]="demoForm.email" placeholder="you@example.com" />
-			</div>
-			<div class="field col-12 md:col-6">
-				<label class="block mb-2">Center / Organization</label>
-				<input pInputText [(ngModel)]="demoForm.center" placeholder="Center name" />
-			</div>
-			<div class="field col-12 md:col-6">
-				<label class="block mb-2">Phone</label>
-				<input pInputText [(ngModel)]="demoForm.phone" placeholder="Phone (optional)" />
-			</div>
-			<div class="field col-12">
-				<label class="block mb-2">What would you like to see?</label>
-				<textarea pInputTextarea rows="3" [(ngModel)]="demoForm.message" placeholder="Tell us about your needs"></textarea>
-			</div>
+			
+			<form class="demo-form">
+				<div class="form-row">
+					<div class="form-field">
+						<label class="field-label">Full Name *</label>
+						<input pInputText 
+							   [(ngModel)]="demoForm.name" 
+							   name="name"
+							   placeholder="Enter your full name" 
+							   class="form-input" />
+					</div>
+					<div class="form-field">
+						<label class="field-label">Email Address *</label>
+						<input pInputText 
+							   [(ngModel)]="demoForm.email" 
+							   name="email"
+							   type="email"
+							   placeholder="you@yourchildcare.com" 
+							   class="form-input" />
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="form-field">
+						<label class="field-label">Center Name</label>
+						<input pInputText 
+							   [(ngModel)]="demoForm.center" 
+							   name="center"
+							   placeholder="Your childcare center name" 
+							   class="form-input" />
+					</div>
+					<div class="form-field">
+						<label class="field-label">Phone Number</label>
+						<input pInputText 
+							   [(ngModel)]="demoForm.phone" 
+							   name="phone"
+							   placeholder="+1 (555) 123-4567" 
+							   class="form-input" />
+					</div>
+				</div>
+				
+				<div class="form-field full-width">
+					<label class="field-label">How can we help you?</label>
+					<textarea pInputTextarea 
+							  rows="4" 
+							  [(ngModel)]="demoForm.message" 
+							  name="message"
+							  placeholder="Tell us about your childcare center and what challenges you're facing..."
+							  class="form-textarea"></textarea>
+				</div>
+				
+				<div class="form-benefits">
+					<div class="benefit-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>14-day free trial</span>
+					</div>
+					<div class="benefit-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>Personal onboarding session</span>
+					</div>
+					<div class="benefit-item">
+						<i class="pi pi-check-circle text-green-500"></i>
+						<span>24/7 support included</span>
+					</div>
+				</div>
+			</form>
 		</div>
+		
 		<ng-template pTemplate="footer">
-			<div class="flex justify-content-end gap-2">
-				<button pButton label="Cancel" class="p-button-text" (click)="demoVisible=false"></button>
-				<button pButton label="Send request" [loading]="submitting" (click)="submitDemo()"></button>
+			<div class="dialog-footer">
+				<button pButton 
+						label="Cancel" 
+						class="cancel-button" 
+						(click)="demoVisible=false"></button>
+				<button pButton 
+						label="Start Free Trial" 
+						[loading]="submitting" 
+						class="submit-button"
+						(click)="submitDemo()">
+					<i class="pi pi-arrow-right" *ngIf="!submitting"></i>
+				</button>
 			</div>
 		</ng-template>
 	</p-dialog>

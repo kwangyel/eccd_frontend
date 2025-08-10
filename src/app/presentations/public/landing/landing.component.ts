@@ -51,16 +51,37 @@ export class LandingComponent {
 
   submitDemo() {
     if (!this.demoForm.name || !this.demoForm.email) {
-      this.messages.add({ severity: 'warn', summary: 'Missing info', detail: 'Please add your name and email.' });
+      this.messages.add({ 
+        severity: 'warn', 
+        summary: 'Required Information Missing', 
+        detail: 'Please provide your name and email address to continue.' 
+      });
       return;
     }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.demoForm.email)) {
+      this.messages.add({ 
+        severity: 'warn', 
+        summary: 'Invalid Email', 
+        detail: 'Please enter a valid email address.' 
+      });
+      return;
+    }
+
     this.submitting = true;
-    // Simulate submit
+    
+    // Simulate API call
     setTimeout(() => {
       this.submitting = false;
       this.demoVisible = false;
-      this.messages.add({ severity: 'success', summary: 'Request sent', detail: 'We will reach out shortly.' });
+      this.messages.add({ 
+        severity: 'success', 
+        summary: 'Welcome to Zhidhay!', 
+        detail: 'Your free trial is ready. Check your email for next steps.' 
+      });
       this.demoForm = { name: '', email: '', center: '', phone: '', message: '' };
-    }, 800);
+    }, 1200);
   }
 }
