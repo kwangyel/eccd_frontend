@@ -1,0 +1,52 @@
+<div class="p-fluid">
+    <div class="field mb-4">
+        <label for="description" class="block font-medium mb-2">Description</label>
+        <textarea 
+            id="description" 
+            [(ngModel)]="description" 
+            pInputTextarea 
+            class="w-full"
+            placeholder="Enter property description"
+            rows="4"
+        ></textarea>
+    </div>
+
+    <div class="field mb-4">
+        <label for="rent" class="block font-medium mb-2">Rent Amount</label>
+        <p-inputNumber
+            inputId="rent"
+            [(ngModel)]="rent"
+            [useGrouping]="false"
+            mode="currency"
+            currency="BTN"
+            class="w-full"
+        />
+    </div>
+
+    <div class="field mb-4">
+        <label for="availableDate" class="block font-medium mb-2">Available Date</label>
+        <p-calendar
+            inputId="availableDate"
+            [(ngModel)]="availableFrom"
+            appendTo="body"
+            class="w-full"
+            placeholder="Select date"
+            [showIcon]="true"
+        />
+    </div>
+
+    <div class="flex justify-content-end gap-2 pt-3">
+        <p-button 
+            label="Cancel" 
+            (click)="close()" 
+            severity="secondary"
+            class="p-button-outlined" 
+        />
+        <p-button
+            label="Add Listing"
+            (click)="createListing()"
+            [disabled]="isSubmitting"
+            [loading]="isSubmitting"
+        />
+    </div>
+</div>

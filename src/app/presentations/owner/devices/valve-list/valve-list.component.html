@@ -1,0 +1,78 @@
+<div class="bg-white p-4 h-full"
+    style=" box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08); ">
+    <div class="mb-3">
+        <h4 class="m-0 p-0">
+            {{ building?.name }}
+        </h4>
+        <p>
+            {{ building?.address }}
+        </p>
+        <p>
+            {{ building?.subadministrativeZone?.name }},
+            {{ building?.administrativeZone?.name }},
+            {{ building?.dzongkhag?.name }}
+        </p>
+    </div>
+    <div class="flex align-items-center mb-2 justify-content-between">
+        <div>
+            <p>
+                Showing {{ paginatedUnit.data.length }} of
+                {{ paginatedUnit.count }} Entries
+            </p>
+        </div>
+        <div class="">
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="firstPageNumber" [rows]="rows"
+                [totalRecords]="paginatedUnit.count" [rowsPerPageOptions]="rowsPerPageOptions"
+                [showFirstLastIcon]="true" #paginator></p-paginator>
+        </div>
+    </div>
+
+    <p-table [value]="paginatedUnit.data" styleClass="p-datatable-striped" #dt
+        [globalFilterFields]="['leaseAgreements[0].tenant.nameEnglish']">
+        <!-- <ng-template pTemplate="caption">
+            <div class="flex flex-column align-items-end justify-content-end">
+                <p class="text-sm font-normal">Filter by tenant name</p>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    placeholder="Search keyword" />
+            </div>
+        </ng-template> -->
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Unit Number</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Unit Use</th>
+                <th>Tenant Name</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-unit>
+            <!-- <tr [ngClass]="{'bg-red-50': !unit.leaseAgreements || unit.leaseAgreements.length === 0}"> -->
+            <tr [ngClass]="{
+                'bg-red-100': !unit.leaseAgreements || unit.leaseAgreements.length === 0,
+            }">
+                <td> {{ unit.floorLevel}}-{{unit.unitNumber}} </td>
+                <td> {{ unit.bedroom}}BHK </td>
+                <!-- <td> {{ unit.leaseAgreements && unit.leaseAgreements.length > 0 ? "RENTED" : 'VACANT' }} </td> -->
+                <td>
+                    {{
+                    !unit.leaseAgreements || unit.leaseAgreements.length === 0 ?
+                    'VACANT' : (unit.leaseAgreements[0]?.status === 'PENDING' ? 'PENDING SIGNING FROM TENANT'
+                    :(unit.leaseAgreements[0]?.status === 'UPCOMING_EXPIRATION' ? 'EXPIRING SOON': 'RENTED') )
+                    }}
+                </td>
+                <td> {{ unit.leaseAgreements && unit.leaseAgreements.length > 0 ? unit.leaseAgreements[0].use : 'NA' }}
+                </td>
+                <td> {{ unit.leaseAgreements && unit.leaseAgreements.length > 0 ?
+                    unit.leaseAgreements[0].tenant.nameEnglish : 'NA' }} </td>
+                <td> {{ unit.leaseAgreements && unit.leaseAgreements.length > 0 ?
+                    unit.leaseAgreements[0].tenant.phoneNumber: 'NA' }} </td>
+                <td>
+                    <p-button size="small" label="View" (click)="goToValveSettings(1)" severity="primary" icon="pi pi-cog"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

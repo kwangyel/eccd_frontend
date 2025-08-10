@@ -1,0 +1,64 @@
+// Valve Detail Component Styles
+
+// Knob customization
+:host ::ng-deep .p-knob {
+  .p-knob-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .p-knob-range {
+    transition: stroke 0.3s ease;
+  }
+  
+  .p-knob-value {
+    transition: stroke 0.3s ease;
+  }
+}
+
+// Slider customization
+:host ::ng-deep .p-slider {
+  .p-slider-handle {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  
+  .p-slider-range {
+    transition: background-color 0.3s ease;
+  }
+}
+
+// Status indicator animation
+.status-indicator {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  :host ::ng-deep .p-knob {
+    width: 100px !important;
+    height: 100px !important;
+    
+    .p-knob-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .p-knob {
+    width: 80px !important;
+    height: 80px !important;
+    
+    .p-knob-text {
+      font-size: 0.9rem;
+    }
+  }
+}

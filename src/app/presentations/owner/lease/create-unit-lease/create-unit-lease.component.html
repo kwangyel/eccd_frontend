@@ -1,0 +1,645 @@
+<p-stepper [linear]="false">
+    <p-stepperPanel header="Check Availability">
+        <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+            <div class="mt-4 mb-4">
+                <p class="font-semibold text-lg mt-4 mb-2">
+                    Check Property Availablity for Lease
+                </p>
+                <div class="flex gap-4 align-items-center">
+                    <div class="p-fluid flex justify-content-center gap-3 align-items-center">
+                        <p>Lease Start Date</p>
+                        <p-calendar view="month" [(ngModel)]="leaseStartDate" dateFormat="mm/yy"
+                            appendTo="body"></p-calendar>
+                    </div>
+                    <div class="p-fluid flex justify-content-center gap-3 align-items-center">
+                        <p>Lease End Date</p>
+                        <p-calendar view="month" [(ngModel)]="leaseEndDate" dateFormat="mm/yy" appendTo="body"
+                            [minDate]="leaseStartDate">
+                        </p-calendar>
+                    </div>
+                    <p-button label="Check Availability" (click)="checkPropertyAvailabilityForLease()"></p-button>
+                </div>
+                <div *ngIf="leaseStartDate && leaseEndDate" class="mt-2">
+                    <p>
+                        Lease Duration in Years:
+                        <strong>
+                            {{
+                            getDurationDiffInYears(leaseStartDate, leaseEndDate)
+                            }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-4" *ngIf="propertyAvailabilityResult">
+                <p *ngIf="propertyAvailabilityResult.available" class="text-green-600 font-semibold">
+                    <i class="pi pi-check"></i>
+                    Property Available for Lease for the selected Dates.
+                </p>
+                <div *ngIf="!propertyAvailabilityResult.available">
+                    <p class="text-red-600 font-semibold">
+                        <i class="pi pi-exclamation-circle"></i>
+                        There are some active existing lease agreements with this property.
+                    </p>
+                    <p>
+                        Please terminate the following lease (OR) select the dates after the
+                        lease End date of the following lease Agreement.
+                    </p>
+                </div>
+
+                <div *ngIf=" propertyAvailabilityResult && propertyAvailabilityResult.conflictingLeases ">
+                    <div>
+                        <p-table [value]="propertyAvailabilityResult.conflictingLeases"
+                            styleClass="p-datatable-striped mb-2">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ref</th>
+                                    <th>Status</th>
+                                    <th>Plot</th>
+                                    <th>Lessee Type</th>
+                                    <th>Lessee</th>
+                                    <th>Purpose</th>
+
+                                    <th>Monthly Payable</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            {{ item.id }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p [ngClass]="getStatusClass(item.status)"
+                                            class="border-round text-center font-semibold text-sm">
+                                            {{ getStatusName(item.status) }}
+                                        </p>
+                                    </td>
+
+                                    <td>
+                                        <p style="text-wrap: nowrap">
+                                            {{ item.plot.plotId }}
+                                        </p>
+                                    </td>
+
+                                    <td>
+                                        {{ item.lesseeType | lowercase }}
+                                    </td>
+
+                                    <td>
+                                        <div *ngIf="item.lesseeType === 'INDIVIDUAL'">
+                                            <p style="text-wrap: nowrap">
+                                                Name: {{ item.tenant?.nameEnglish }}
+                                            </p>
+                                            <p>
+                                                {{ item.tenant.phoneNumber }}
+                                            </p>
+                                        </div>
+                                        <div *ngIf="item.lesseeType !== 'INDIVIDUAL'">
+                                            <p>Name: {{ item.organization.name }}</p>
+                                            <p pTooltip="double click to view Tenant details" tooltipPosition="left"
+                                                class="cursor-pointer hover:underline font-semibold" (dblclick)="
+                                        goToTenantDetailedView(item.tenant.id)
+                                    " style="text-wrap: nowrap">
+                                                {{ item.organization.userType }} :
+                                                {{ item.tenant?.nameEnglish }}
+                                            </p>
+                                            <p>
+                                                Phone Number: {{ item.tenant.phoneNumber }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ item.use | lowercase }}
+                                    </td>
+                                    <td>
+                                        <p>Nu. {{ computeMonthlyPayable(item) }}</p>
+                                    </td>
+                                    <td>
+                                        <p style="text-wrap: nowrap">
+                                            {{ item.leaseStartDate | date : "mediumDate" }}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{ item.leaseEndDate | date : "mediumDate" }}
+                                    </td>
+
+                                    <td>
+                                        <div class="flex gap-2">
+                                            <p-button size="small" label="Terminate"
+                                                (click)="openTerminateLeaseModal(item)" severity="danger"
+                                                icon="pi pi-times"></p-button>
+                                            <p-button size="small" label="View" (click)="goToDetailedView(item)"
+                                                severity="secondary" icon="pi pi-eye"></p-button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4" *ngIf="propertyPaymentDueResult">
+                <p *ngIf="!propertyPaymentDueResult.totalOverDue" class="text-green-600 font-semibold">
+                    <i class="pi pi-check"></i>
+                    No Dues for this property
+                </p>
+
+                <div *ngIf="propertyPaymentDueResult.totalOverDue">
+                    <p class="text-yellow-600 font-semibold">
+                        <i class="pi pi-exclamation-circle"></i>
+                        There are unpaid dues for the selected property.
+                    </p>
+
+                    <p class="font-semibold mt-2 mb-2 text-lg">
+                        Total Due: Nu.{{ propertyPaymentDueResult.totalOverDue }}
+                    </p>
+
+                    <p-table [value]="propertyPaymentDueResult?.pendingPaymentAdvices" styleClass="p-datatable-striped">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Ref</th>
+                                <th>Status</th>
+                                <th>Title</th>
+                                <th>Total Amount</th>
+                                <th>Due by</th>
+
+                                <th>Payer</th>
+
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td>
+                                    <p>#{{ item.id }}</p>
+                                </td>
+                                <td>
+                                    <p [ngClass]="getPaymentStatusClass(item.status)"
+                                        class="border-round text-center font-semibold text-sm">
+                                        {{ item.status | titlecase }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>{{ item.title }}</p>
+                                </td>
+
+                                <td>Nu. {{ item.totalAmount }}</td>
+
+                                <td>
+                                    {{ item.dueDate | date : "mediumDate" }}
+                                </td>
+
+                                <td>
+                                    <p>
+                                        Name:{{ item.leaseAgreement.tenant?.nameEnglish }}
+                                    </p>
+                                    <p>
+                                        Phone: {{ item.leaseAgreement.tenant?.phoneNumber }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <div class="flex gap-2">
+                                        <p-button size="small" label="Payment Advice" icon="pi pi-file-o"
+                                            (click)="openViewPaymentReceipt([item])" severity="secondary"></p-button>
+                                        <p-button size="small" label="Write Off" (click)="writeOffPaymentAdvice(item)"
+                                            severity="danger" icon="pi pi-times"></p-button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+
+            <div *ngIf="propertyAvailabilityResult && propertyPaymentDueResult">
+                <p-divider></p-divider>
+                <p class="font-semibold text-yellow-700" *ngIf="propertyPaymentDueResult?.totalOverDue">
+                    <i class="pi pi-exclamation-circle"></i> There are outstanding dues
+                    associated with this property. While these do not affect lease
+                    creation, please review and address them.
+                </p>
+                <p class="text-lg font-semibold text-red-600" *ngIf="!propertyAvailabilityResult?.available">
+                    <i class="pi pi-exclamation-circle"></i> Property cannot be leased
+                    as there are conflicting lease agreements with the selected
+                    property.
+                </p>
+            </div>
+
+            <div class="flex pt-4 justify-content-between">
+                <p-button label="Cancel" severity="secondary" (onClick)="cancelLeaseCreation()" />
+                <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                    [disabled]="!propertyAvailabilityResult?.available" (onClick)="nextCallback.emit()" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+    <p-stepperPanel header="Select Tenant">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-index="index">
+            <div>
+                <div class="mt-2 mb-2 p-fluid flex gap-4 align-items-end">
+                    <div>
+                        <p class="mb-2">Add tenant by search their phone number.</p>
+                        <p-inputGroup>
+                            <p-inputGroupAddon>+975</p-inputGroupAddon>
+                            <p-inputNumber [(ngModel)]="searchPhoneNumber" mode="decimal" inputId="withoutgrouping"
+                                [useGrouping]="false" />
+                            <p-button label="Search Tenant " (click)="SearchTenantByPhoneNumber()"
+                                icon="pi pi-search"></p-button>
+                        </p-inputGroup>
+                    </div>
+                </div>
+                <div>
+                    <div *ngIf="searchedUser" class="card mt-4">
+                        <div class="flex gap-4">
+                            <div class="flex flex-column align-items-center">
+                                <p-knob [(ngModel)]="tenantScore" [valueColor]="getColorForScore(tenantScore)"
+                                    valueTemplate="{value}pts" [readonly]="true" />
+                                <p>Tenant Credit Score</p>
+                            </div>
+                            <div>
+                                <p>
+                                    Name English:
+                                    <strong> {{ searchedUser.nameEnglish }}</strong>
+                                </p>
+                                <p>
+                                    Name Dzongkha:
+                                    <strong> {{ searchedUser.nameDzongkha }}</strong>
+                                </p>
+                                <p>
+                                    CID:
+                                    <strong>{{ searchedUser.cid }}</strong>
+                                </p>
+                                <p>
+                                    PhoneNumber:
+                                    <strong> {{ searchedUser.phoneNumber }}</strong>
+                                </p>
+                                <p>
+                                    Permanent Address: <br />
+                                    <strong> {{ searchedUser.permanentAddress }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-content-end align-items-center" *ngIf="searchedUser">
+                        <p class="text-green-700 font-semibold mr-2" *ngIf="selectedTenant">
+                            <i class="pi pi-check"></i> Tenant Selected: ({{ selectedTenant.nameEnglish }})
+                        </p>
+                        <p-button *ngIf="!selectedTenant" (click)="confirmTenantPartySelection()"
+                            [label]="'Select Tenant'"></p-button>
+                        <p-button *ngIf="selectedTenant" (click)="cancelSelectedTenant()" severity="danger"
+                            [label]="'Clear Tenant'"></p-button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex pt-4 justify-content-between">
+                <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="!selectedTenant"
+                    (onClick)="nextCallback.emit()" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+    <p-stepperPanel header="General Terms">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-index="index">
+            <div class="mb-4">
+                <p-divider> </p-divider>
+                <p-confirmPopup></p-confirmPopup>
+                <div #mainCOntainer class="px-6 mt-6">
+                    <p class="mb-3 mt-4 font-semibold">Lease Purpose and Charges</p>
+                    <div class="grid mt-8">
+                        <div class="col-4 field p-fluid">
+                            <p>Lease Purpose</p>
+                            <p-dropdown [options]="uses" [(ngModel)]="selectedUse" [showClear]="true"
+                                placeholder="Select Use" appendTo="body">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-4 field p-fluid">
+                            <p>Monthly rent</p>
+                            <p-inputGroup>
+                                <p-inputGroupAddon>Nu.</p-inputGroupAddon>
+                                <p-inputNumber [(ngModel)]="rent" inputId="minmaxfraction" minFractionDigits="0"
+                                    maxFractionDigits="10" />
+                            </p-inputGroup>
+                        </div>
+                        <div class="col-4 field p-fluid">
+                            <p>Security Deposit</p>
+                            <p-inputGroup>
+                                <p-inputGroupAddon>Nu.</p-inputGroupAddon>
+                                <p-inputNumber [(ngModel)]="securityDepositAmount" inputId="minmaxfraction"
+                                    minFractionDigits="0" maxFractionDigits="10" />
+                            </p-inputGroup>
+                        </div>
+
+                        <div class="col-4 field p-fluid">
+                            <p>Deposit to Account</p>
+                            <p-dropdown [options]="ownerBankAccounts" [(ngModel)]="selectedOwnerBankAccount"
+                                [showClear]="true" placeholder="Select the Account to deposit to">
+                                <ng-template pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2" *ngIf="selectedOwnerBankAccount">
+                                        {{ selectedOwnerBankAccount.accountName }},
+                                        {{ selectedOwnerBankAccount.accountNumber }}/{{
+                                        selectedOwnerBankAccount.bankName
+                                        }}
+                                    </div>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <p>
+                                        {{ item.accountName }},{{ item.accountNumber }}/{{
+                                        item.bankName
+                                        }}
+                                    </p>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div #additionalCharges class="mt-5">
+                        <div class="flex justify-content-between">
+                            <p class="font-semibold">Additional Lease Charges</p>
+                            <p-button label="Add Lease Charge" size="small"
+                                (click)="openCreateLeaseSurchargeModal()"></p-button>
+                        </div>
+                        <p-divider></p-divider>
+
+                        <p-table *ngIf="leaseCharges.length" [value]="leaseCharges" class="p-datatable-sm">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Particular</th>
+                                    <th>Amount(NU)</th>
+                                    <th>Source</th>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-editing="editing">
+                                <tr>
+                                    <td [pEditableColumn]="item.particular" pEditableColumnField="particular">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" [(ngModel)]="item.particular" />
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{ item.particular }}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td [pEditableColumn]="item.amount" pEditableColumnField="amount">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <p-inputNumber [(ngModel)]="item.amount" />
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{ item.amount }}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td>
+                                        {{ item.origin }}
+                                    </td>
+                                    <td>
+                                        <p class="text-red-500 cursor-pointer hover:underline"
+                                            (click)="deleteCharge($event, item)">
+                                            remove
+                                        </p>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                        <p *ngIf="!leaseCharges.length">- No additional lease charges</p>
+                    </div>
+
+                    <div class="flex flex-column justify-content-end gap-2 align-items-end text-right mt-6">
+                        <div>
+                            <p class="text-lg font-bold">
+                                Total Montly Payable :
+                                <strong>
+                                    {{ getTotalMonthlyPayabe() }}
+                                </strong>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <p-dialog header="Add Charges" [(visible)]="showAddLeaseChargeForm" [modal]="true" [draggable]="false"
+                    [resizable]="false">
+                    <form [formGroup]="createLeaseChargeForm" class="p-fluid p-2">
+                        <div class="grid">
+                            <div class="field col-12">
+                                <label for="particular">Particular</label>
+                                <textarea rows="5" cols="30" pInputTextarea formControlName="particular"></textarea>
+                            </div>
+                            <div class="field col-12">
+                                <label for="particular">Amount</label>
+                                <p-inputNumber inputId="integeronly" formControlName="amount">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+
+                        <p-button (click)="createLeaseCharge()" label="Add Surcharge"></p-button>
+                    </form>
+                </p-dialog>
+            </div>
+            <div class="flex pt-4 justify-content-between">
+                <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" [disabled]="!checkDataValid()"
+                    (onClick)="saveGeneralTerms(nextCallback)" />
+            </div>
+        </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel header="Detailed Terms">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-index="index">
+            <div class="mt-2 mb-4">
+                <div>
+                    <p-confirmPopup></p-confirmPopup>
+                    <div #mainCOntainer class="px-6 mt-6">
+                        <p class="mb-3 mt-4 font-semibold">Terms and Conditions</p>
+                        <div class="flex w-full flex-column gap-4">
+                            <div class="flex align-items-center gap-4">
+                                <p>- Is the tenant allowed to sublet the property?</p>
+                                <p-selectButton [options]="yesNoOptions" [(ngModel)]="tenantSubletAuthority"
+                                    optionLabel="name" optionValue="value" [allowEmpty]="false" />
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Can the owner terminate the lease early?</p>
+                                <p-selectButton [options]="yesNoOptions" [(ngModel)]="ownerPrematureTermination"
+                                    optionLabel="name" optionValue="value" [allowEmpty]="false" />
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Can the tenant terminate the lease early?</p>
+                                <p-selectButton [options]="yesNoOptions" [(ngModel)]="tenantPrematureTermination"
+                                    optionLabel="name" optionValue="value" [allowEmpty]="false" />
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Rent is due by day</p>
+                                <p-inputNumber inputId="integeronly" [(ngModel)]="paymentDueDay"></p-inputNumber>
+                                <p>
+                                    of the following month. Penalties will apply after this
+                                    date.
+                                </p>
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Penalty for late payment:</p>
+                                <p-inputNumber inputId="integeronly"
+                                    [(ngModel)]="penaltyPercentagePerAnnum"></p-inputNumber>
+                                <p>% per annum on the overdue amount, charged daily.</p>
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Rent will be increased:</p>
+                                <p-inputNumber inputId="integeronly"
+                                    [(ngModel)]="rentIncrementPercentage"></p-inputNumber>
+                                <p>% every</p>
+                                <p-inputNumber inputId="integeronly"
+                                    [(ngModel)]="rentIncrementDurationYear"></p-inputNumber>
+                                <p>year(s).</p>
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Notice period for rent increase:</p>
+                                <p-inputNumber inputId="integeronly"
+                                    [(ngModel)]="rentIncreaseNoticePeriod"></p-inputNumber>
+                                <p>month(s).</p>
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Tenant’s notice period for vacating:</p>
+                                <p-inputNumber inputId="integeronly" [(ngModel)]="vacationNoticePeriod"></p-inputNumber>
+                                <p>month(s).</p>
+                            </div>
+
+                            <div class="flex align-items-center gap-4">
+                                <p>- Notice period for eviction:</p>
+                                <p-inputNumber inputId="integeronly" [(ngModel)]="evictionNoticePeriod"></p-inputNumber>
+                                <p>month(s).</p>
+                            </div>
+                        </div>
+
+                        <div #additinalRules class="mt-5">
+                            <div class="flex justify-content-between">
+                                <p class="font-semibold">Additional Lease Terms</p>
+                                <p-button label="Add Lease Terms" size="small"
+                                    (click)="openCreateLeaseRuleModal()"></p-button>
+                            </div>
+                            <p-divider></p-divider>
+
+                            <p-table *ngIf="leaseRules.length" [value]="leaseRules" class="p-datatable-sm">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Particular</th>
+                                        <th>Origin</th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item let-editing="editing">
+                                    <tr>
+                                        <td [pEditableColumn]="item.particular" pEditableColumnField="particular">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <input pInputText type="text" [(ngModel)]="item.particular" />
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ item.particular }}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>
+                                        <td>
+                                            {{ item.origin }}
+                                        </td>
+
+                                        <td>
+                                            <p class="text-red-500 cursor-pointer hover:underline"
+                                                (click)="deleteRule($event, item)">
+                                                remove
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                            <p *ngIf="!leaseRules.length">- No additional lease terms</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p-dialog header="Add Lease Rules" [(visible)]="showAddLeaseRuleForm" [modal]="true" [draggable]="false"
+                    [resizable]="false">
+                    <form [formGroup]="createLeaseRuleForm" class="p-fluid p-2">
+                        <div class="grid">
+                            <div class="field col-12">
+                                <label for="particular">Particular</label>
+                                <textarea rows="5" cols="30" pInputTextarea formControlName="particular"></textarea>
+                            </div>
+                        </div>
+
+                        <p-button (click)="createLeaseRule()" label="Add Lease Rule"></p-button>
+                    </form>
+                </p-dialog>
+            </div>
+            <div class="flex pt-4 justify-content-between">
+                <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                    (onClick)="saveDetailedTerms(nextCallback)" />
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel header="Finalize Lease">
+        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+            let-index="index">
+            <div>
+                <p class="font-semibold text-lg mb-2">Notification Options</p>
+                <div class="flex flex-column gap-2 mb-4">
+                    <div class="flex align-items-center gap-4 mb-1">
+                        <p>-Lease Creation Notification</p>
+                        <p-selectButton [options]="yesNoOptions" [(ngModel)]="notifyLeaseCreation" optionLabel="name"
+                            optionValue="value" [allowEmpty]="false" />
+                    </div>
+                    <div class="flex align-items-center gap-4">
+                        <p>-Lease Lease Security Deposit Payment Notification</p>
+                        <p-selectButton [options]="yesNoOptions" [(ngModel)]="notifySecurityDepositPayment"
+                            optionLabel="name" optionValue="value" [allowEmpty]="false" />
+                    </div>
+                    <div class="flex align-items-center gap-4">
+                        <p>-Lease Lease Acceptance Reminder Notification</p>
+                        <p-selectButton [options]="yesNoOptions" [(ngModel)]="notifyLeaseAcceptance" optionLabel="name"
+                            optionValue="value" [allowEmpty]="false" />
+                    </div>
+                </div>
+            </div>
+            <div class="flex pt-4 justify-content-between">
+                <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                <div class="flex justify-content-end gap-2">
+                    <p-button label="Cancel" severity="secondary" (onClick)="cancelLeaseCreation()" />
+                    <p-button label="Create Lease" (click)="createLeaseAgreement()" />
+                </div>
+            </div>
+
+        </ng-template>
+    </p-stepperPanel>
+
+</p-stepper>
+
+
+<!-- Step 5 -->
+
+
+<!-- Footer -->
+<div class="mt-4 mb-5">
+    <p-divider> </p-divider>
+</div>

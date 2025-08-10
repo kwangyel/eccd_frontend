@@ -1,0 +1,164 @@
+<div class="bg-white p-4 h-full"
+    style=" box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08); ">
+    <div class="flex justify-content-between align-items-center mb-4">
+        <div class="mb-3">
+            <h4 class="m-0 p-0">
+                Tax Report for {{ building?.name }}
+            </h4>
+            <p>
+                {{ building?.address }}
+            </p>
+            <p>
+                {{ building?.subadministrativeZone?.name }},
+                {{ building?.administrativeZone?.name }},
+                {{ building?.dzongkhag?.name }}
+            </p>
+        </div>
+
+        <div>
+            <div class="flex align-items-center mb-2 justify-content-between">
+                <p>Select Year</p>
+                <p-inputGroup>
+                    <p-calendar [(ngModel)]="selectedYear" view="year" dateFormat="yy" [yearNavigator]="true"
+                        [yearRange]="'1990:2050'" />
+                    <p-button label="Load Data" icon="pi pi-file-excel" size="small" (click)="loadData()"
+                        severity="secondary"></p-button>
+                </p-inputGroup>
+            </div>
+
+        </div>
+
+    </div>
+    <p-divider></p-divider>
+
+    <div class="bg-gradient-to-r p-6 border-round-lg border-1 border-gray-200 shadow-2">
+        <div class="flex justify-content-between align-items-center mb-4">
+            <h3 class="text-2xl font-bold text-gray-700">Tax Summary</h3>
+            <p-button label="Recalculate" icon="pi pi-refresh" size="small" (click)="calculateTaxes()"
+                class="p-button-outlined"></p-button>
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-6">
+                <div class="bg-white p-4 border-round shadow-1 mb-3">
+                    <div class="flex justify-content-between align-items-center mb-3">
+                        <span class="text-lg font-semibold text-gray-700">Gross Income</span>
+                        <span class="text-xl font-bold text-green-600">Nu. {{grossIncome | number: "1.0-2"}}</span>
+                    </div>
+                    <div class="flex justify-content-between align-items-center mb-3">
+                        <span class="text-lg font-semibold text-gray-700">Repairs Deduction</span>
+                        <span class="text-xl font-bold text-red-600">Nu. {{repairsDeduction | number: "1.0-2"}}</span>
+                    </div>
+                    <div class="flex justify-content-between align-items-center">
+                        <span class="text-lg font-semibold text-gray-700">Net Income</span>
+                        <span class="text-xl font-bold text-blue-600">Nu. {{netIncome | number: "1.0-2"}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-6">
+                <div class="bg-white p-4 border-round shadow-1 mb-3">
+                    <div class="field mb-3">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tax Deductions</label>
+                        <p-inputNumber inputId="taxDeductions" [(ngModel)]="taxDeductions"
+                             class="w-full" [min]="0" />
+                    </div>
+                    <div class="field">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Other Deductions</label>
+                        <p-inputNumber inputId="otherDeductions" [(ngModel)]="otherDeductions"
+                             class="w-full" [min]="0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-primary-50 p-4 border-round border-1 border-primary-200">
+            <div class="flex justify-content-between align-items-center mb-2">
+                <span class="text-lg font-bold text-primary">Taxable Income</span>
+                <span class="text-2xl font-bold text-primary">Nu. {{taxableIncome | number: "1.0-2"}}</span>
+            </div>
+            <div class="flex justify-content-between align-items-center">
+                <span class="text-lg font-bold text-orange-600">Estimated Tax</span>
+                <span class="text-2xl font-bold text-orange-600">Nu. {{estimatedTax | number: "1.0-2"}}</span>
+            </div>
+        </div>
+    </div>
+
+    <p-divider></p-divider>
+    <h4 class="m-0 p-0 ml-2">
+        Rental Sheet for {{ selectedYear.getFullYear() }}
+    </h4>
+    <div class="mt-5">
+        <p-table [value]="units" [scrollable]="true" styleClass="p-datatable-gridlines p-datatable-striped">
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-between align-items-center">
+                    <div class="">
+                        <p>Total Due: Nu. {{ totalPending }}</p>
+                        <p>Total Units: {{ units.length }}</p>
+                        <p>Vacant Units: {{ vacantUnitCount }}</p>
+                    </div>
+                    <div>
+                        <p-button label="Download Rental Sheet Excel" icon="pi pi-file-excel" size="small"
+                            (click)="downloadRentalSheet()"></p-button>
+                    </div>
+
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: max-content" pFrozenColumn>Unit</th>
+                    <th>JAN</th>
+                    <th>FEB</th>
+                    <th>MAR</th>
+                    <th>APR</th>
+                    <th>MAY</th>
+                    <th>JUN</th>
+                    <th>JUL</th>
+                    <th>AUG</th>
+                    <th>SEP</th>
+                    <th>OCT</th>
+                    <th>NOV</th>
+                    <th>DEC</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-unit>
+                <tr>
+                    <td pFrozenColumn style="min-width: 80px">
+                        <p class="text-xl font-semibold">
+                            {{ unit.floorLevel }}-{{ unit.unitNumber }}
+                        </p>
+                    </td>
+                    <td *ngFor="let advice of unit.paymentAdvices; let i = index" style="padding: 0px">
+                        <ng-container *ngIf="advice && advice.id; else naTemplate">
+                            <div (dblclick)="
+                                openPADetails(
+                                    [advice],
+                                    unit.activeLeaseAgreement
+                                )
+                            " class="cursor-pointer hover:bg-gray-100 p-2 no-select">
+                                <p>Title:{{ advice.title }}</p>
+                                <p style="text-wrap: nowrap">
+                                    Status:
+                                    <span class="font-semibold mr-2 px-2 py-1 border-round-md text-sm" [ngClass]="{
+                                        'text-green-50  bg-green-600  ':
+                                            advice.status === 'PAID',
+                                        'text-red-50 bg-red-600  ':
+                                            advice.status === 'DUE'
+                                    }">
+                                        {{ advice.status }} Nu.
+                                        {{ advice.totalAmount }}</span>
+                                </p>
+                            </div>
+                        </ng-container>
+                        <ng-template #naTemplate>
+                            <p *ngIf="unit.activeLeaseAgreement?.id">NA</p>
+                            <p *ngIf="!unit.activeLeaseAgreement?.id">Vacant</p>
+                        </ng-template>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+    </div>
+</div>

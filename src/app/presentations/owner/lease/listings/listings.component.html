@@ -1,0 +1,43 @@
+<div class="flex align-items-center mb-2 justify-content-between">
+    <div>
+        <p>
+            Showing {{ paginatedPlotData.data.length }} of
+            {{ paginatedPlotData.count }} Entries
+        </p>
+    </div>
+    <div class="">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="firstPageNumber" [rows]="rows"
+            [totalRecords]="paginatedPlotData.count" [rowsPerPageOptions]="rowsPerPageOptions"
+            [showFirstLastIcon]="true" #paginator></p-paginator>
+    </div>
+</div>
+
+<p-table [value]="paginatedPlotData.data" styleClass="p-datatable-striped" #dt [globalFilterFields]="['plotId']">
+    <ng-template pTemplate="caption">
+        <div class="flex flex-column align-items-end justify-content-end">
+            <p class="text-sm font-normal">Filter by Plot ID</p>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Description</th>
+            <th>Rent</th>
+            <th>Available From</th>
+            <th>Building</th>
+            <th>Unit Number</th>
+            <th>Listing Date</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-listing>
+        <tr>
+            <td> {{ listing.description }} </td>
+            <td> {{ listing.rent}} </td>
+            <td> {{ listing.availableFrom | date:'mediumDate' }} </td>
+            <td> {{ listing.unit.building.name }} </td>
+            <td> {{ listing.unit.floorLevel }}-{{ listing.unit.unitNumber}} </td>
+            <td> {{ listing.createdAt | date:'short' }} </td>
+        </tr>
+    </ng-template>
+</p-table>

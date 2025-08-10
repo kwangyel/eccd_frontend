@@ -1,0 +1,214 @@
+<div class="application-form-container">
+  <div class="form-wrapper">
+    <!-- Header Section with Logo -->
+    <div class="form-header">
+      <div class="logo-section">
+        <img src="assets/logo/zhidhay_bg.png" alt="Zhidhay Logo" class="company-logo" />
+        <h1 class="form-title">Property Application Form</h1>
+      </div>
+      <p class="form-subtitle">Please fill out the form below to apply for this property listing</p>
+      <p class="form-subtitle">{{ applicationDescription }}</p>
+      <div class="application-id-badge">
+        <span class="badge-label">Application ID:</span>
+        <span class="badge-value">{{ applicationId }}</span>
+      </div>
+    </div>
+
+    <!-- Application Submitted Banner -->
+    <div *ngIf="isSubmitted" class="application-submitted-banner">
+      <div class="submitted-message-content px-4">
+        <div class="success-icon-wrapper">
+          <i class="pi pi-check-circle success-icon"></i>
+          <div class="success-animation"></div>
+        </div>
+        <div class="message-text">
+          <h3 class="success-title">Application Submitted Successfully!</h3>
+          <p class="success-description">Your application has been successfully submitted. We will review it and get back to you.</p>
+          <div class="success-details">
+            <span class="application-ref">Reference ID: {{ applicationId }}</span>
+          </div>
+        </div>
+        <button class="close-banner-btn" (click)="dismissSuccessBanner()" title="Dismiss">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div *ngIf="isError" class="application-error-banner">
+      <div class="error-message-content px-4">
+        <div class="error-icon-wrapper">
+          <i class="pi pi-exclamation-triangle error-icon"></i>
+        </div>
+        <div class="message-text">
+          <h3 class="error-title">Submission Failed</h3>
+          <p class="error-description">{{ errorMessage }}</p>
+          <div class="error-actions">
+            <p>Please Try again</p>
+            <!-- <button class="retry-btn" (click)="retrySubmission()">
+              <i class="pi pi-refresh"></i>
+              Try Again
+            </button> -->
+          </div>
+        </div>
+        <button class="close-banner-btn" (click)="dismissErrorBanner()" title="Dismiss">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Form Section -->
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" class="application-form" [class.form-disabled]="isFormDisabled" *ngIf="!isApplicationClosed">
+      <div class="form-grid" [class.disabled-overlay]="isFormDisabled">
+        <!-- Name Field -->
+        <div class="form-group full-width">
+          <label for="name" class="form-label">
+            <i class="icon-user"></i>
+            Full Name *
+          </label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-input"
+            [class.error]="isFieldInvalid('name')"
+            placeholder="Enter your full name"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('name')">
+            {{ getFieldError('name') }}
+          </div>
+        </div>
+
+        <!-- CID Field -->
+        <div class="form-group">
+          <label for="cid" class="form-label">
+            <i class="icon-id"></i>
+            Citizenship ID (CID) *
+          </label>
+          <input
+            type="text"
+            id="cid"
+            formControlName="cid"
+            class="form-input"
+            [class.error]="isFieldInvalid('cid')"
+            placeholder="11-digit CID number"
+            maxlength="11"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('cid')">
+            {{ getFieldError('cid') }}
+          </div>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="form-group">
+          <label for="phoneNumber" class="form-label">
+            <i class="icon-phone"></i>
+            Phone Number *
+          </label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            class="form-input"
+            [class.error]="isFieldInvalid('phoneNumber')"
+            placeholder="8-digit phone number"
+            maxlength="8"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('phoneNumber')">
+            {{ getFieldError('phoneNumber') }}
+          </div>
+        </div>
+
+        <!-- Occupation Field -->
+        <div class="form-group full-width">
+          <label for="occupation" class="form-label">
+            <i class="icon-briefcase"></i>
+            Occupation *
+          </label>
+          <input
+            type="text"
+            id="occupation"
+            formControlName="occupation"
+            class="form-input"
+            [class.error]="isFieldInvalid('occupation')"
+            placeholder="Your current occupation"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('occupation')">
+            {{ getFieldError('occupation') }}
+          </div>
+        </div>
+
+        <!-- Number of People Living -->
+        <div class="form-group">
+          <label for="noOfPeopleLiving" class="form-label">
+            <i class="icon-users"></i>
+            Number of People Living *
+          </label>
+          <input
+            type="number"
+            id="noOfPeopleLiving"
+            formControlName="noOfPeopleLiving"
+            class="form-input"
+            [class.error]="isFieldInvalid('noOfPeopleLiving')"
+            placeholder="Number of occupants"
+            min="1"
+            max="20"
+          >
+          <div class="error-message" *ngIf="isFieldInvalid('noOfPeopleLiving')">
+            {{ getFieldError('noOfPeopleLiving') }}
+          </div>
+        </div>
+
+        <!-- Car Ownership -->
+        <div class="form-group">
+          <label class="form-label checkbox-label">
+            <i class="icon-car"></i>
+            Vehicle Information
+          </label>
+          <div class="checkbox-wrapper">
+            <input
+              type="checkbox"
+              id="hasCar"
+              formControlName="hasCar"
+              class="form-checkbox"
+            >
+            <label for="hasCar" class="checkbox-text">I own a car/vehicle</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="isSubmitting || isFormDisabled"
+          [class.loading]="isSubmitting"
+          [class.disabled]="isFormDisabled"
+        >
+          <span *ngIf="!isSubmitting && !isFormDisabled" class="btn-text">
+            <!-- <i class="icon-send"></i> -->
+            Submit Application
+          </span>
+          <span *ngIf="isSubmitting" class="btn-text">
+            <!-- <i class="icon-loading"></i> -->
+            Submitting...
+          </span>
+          <span *ngIf="isFormDisabled && !isSubmitting" class="text-white" >
+            <!-- <i class="icon-lock"></i> -->
+            Application Closed
+          </span>
+        </button>
+      </div>
+
+      <!-- Form Info -->
+      <div class="form-info">
+        <p class="info-text">
+          <i class="icon-info"></i>
+          All fields marked with (*) are required. Your information will be kept confidential and used only for processing your application.
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

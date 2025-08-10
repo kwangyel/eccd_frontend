@@ -1,0 +1,133 @@
+:host ::ng-deep .custom-tabview .p-tabview-nav {
+    color: #bdcad4;
+}
+
+:host ::ng-deep .custom-tabview .p-tabview-nav li {
+    font-size: 16px;
+}
+
+:host ::ng-deep .custom-tabview .p-tabview-nav li .p-tabview-title {
+    color: #bdcad4; /* Text color */
+    font-weight: 800;
+    padding: 2px 16px;
+}
+
+:host ::ng-deep .custom-tabview .p-tabview-nav li.p-highlight .p-tabview-title {
+    color: #224e70; /* Highlighted tab color */
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    border-color: #224e70;
+}
+
+.cta-section {
+    position: relative;
+    padding: 3rem 0;
+    overflow: hidden;
+    // background-color: #ffffff86;
+}
+
+.cta-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    border-bottom-right-radius: 100%;
+
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/patterns/DBonB.png");
+    background-blend-mode: screen;
+    background-repeat: repeat;
+    background-size: 20%;
+    opacity: 0.9;
+    z-index: -1;
+}
+
+.pattern-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.pattern-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/assets/patterns/YonW.png");
+    background-blend-mode: screen;
+    background-repeat: repeat;
+    background-size: 20%;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+// App Download Button Styles
+.app-download-btn {
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+        background: #333 !important;
+        
+        i, div {
+            color: #fff !important;
+        }
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+    
+    i {
+        font-size: 2rem;
+        color: #fff !important;
+    }
+    
+    div {
+        color: #fff !important;
+        
+        div {
+            color: #fff !important;
+        }
+    }
+}
+
+// Footer responsive adjustments
+@media (max-width: 768px) {
+    .app-download-btn {
+        min-width: 180px;
+        padding: 12px 16px;
+        
+        i {
+            font-size: 2rem;
+        }
+        
+        .text-lg {
+            font-size: 1rem;
+        }
+        
+        .text-xs {
+            font-size: 0.75rem;
+        }
+    }
+}
+
+// Animation for floating effect
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}

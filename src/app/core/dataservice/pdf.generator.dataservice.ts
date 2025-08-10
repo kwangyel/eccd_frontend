@@ -1,0 +1,44 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { API_URL } from '../constants/constants';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class PDFGeneratorDataService {
+    apiUrl = environment.API_URL;
+
+    constructor(private http: HttpClient) {}
+
+    DownloadLeaseAgreementPdf(leaseAgreementId: number): Observable<Blob> {
+        return this.http.get<Blob>(
+            `${this.apiUrl}/pdf-generator/lease-agreement/${leaseAgreementId}`,
+            {
+                responseType: 'blob' as 'json', // Explicitly specify the response type
+            }
+        );
+    }
+    DownloadPaymentReceiptPDF(paymentReceiptId: number): Observable<Blob> {
+        return this.http.get<Blob>(
+            `${this.apiUrl}/pdf-generator/payment-receipt/${paymentReceiptId}`,
+            {
+                responseType: 'blob' as 'json', // Explicitly specify the response type
+            }
+        );
+    }
+
+    DownloadPaymentAdvicePDF(paymentAdviceId: number): Observable<Blob> {
+        return this.http.get<Blob>(
+            `${this.apiUrl}/pdf-generator/payment-advice/${paymentAdviceId}`,
+            {
+                responseType: 'blob' as 'json', // Explicitly specify the response type
+            }
+        );
+    }
+
+    GetPdfUrl(leaseAgreementId: number): string {
+        return `${this.apiUrl}/pdf-generator/lease-agreement/${leaseAgreementId}`;
+    }
+}

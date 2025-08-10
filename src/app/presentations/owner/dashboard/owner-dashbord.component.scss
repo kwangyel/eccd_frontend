@@ -1,0 +1,43 @@
+:host ::ng-deep {
+    .p-card {
+        border-radius: 1rem;
+
+        .p-card-body {
+            padding: 1.5rem;
+        }
+    }
+
+    .surface-50 {
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: var(--surface-100);
+            transform: translateY(-2px);
+        }
+    }
+
+    .p-progressbar {
+        height: 1.5rem;
+        border-radius: 0.75rem;
+
+        .p-progressbar-value {
+            background: var(--primary-color);
+            transition: width 1s ease;
+        }
+    }
+
+    .p-button.p-button-link {
+        color: var(--primary-color);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // Responsive adjustments
+    @media screen and (max-width: 991px) {
+        .grid > .col-12 {
+            margin-bottom: 1rem;
+        }
+    }
+}
