@@ -1,1 +1,193 @@
-<p>landing works!</p>
+<div class="min-h-screen surface-ground">
+	<p-toast position="top-right"></p-toast>
+
+	<!-- Hero -->
+	<div class="px-3 md:px-6 lg:px-8 py-5 md:py-6 lg:py-8">
+		<div class="flex flex-column md:flex-row align-items-center justify-content-between gap-5">
+			<div class="flex-1">
+				<div class="flex align-items-center gap-2 mb-3 cursor-pointer" routerLink="/">
+					<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
+					<span class="text-3xl md:text-4xl font-bold text-primary">Zhidhay</span>
+				</div>
+
+				<h1 class="text-4xl md:text-6xl font-bold line-height-2">All-in-one Childcare Management</h1>
+				<p class="mt-3 text-700 text-lg md:text-xl">Manage attendance, billing, messaging, and family engagement in one beautiful workspace. Inspired by best-in-class tools you already love.</p>
+
+				<div class="flex gap-3 mt-4">
+					<button pButton pRipple label="Request a demo" class="p-button-lg" (click)="openDemo()"></button>
+					<a routerLink="/auth/login" pButton pRipple label="Login" class="p-button-outlined p-button-lg"></a>
+				</div>
+
+				<div class="flex align-items-center gap-3 mt-4 text-600">
+					<i class="pi pi-shield text-green-500"></i>
+					<span>Secure • Cloud-hosted • Works on any device</span>
+				</div>
+			</div>
+
+			<div class="flex-1 w-full">
+				<p-card class="w-full shadow-3">
+					<ng-template pTemplate="header">
+						<div class="flex align-items-center justify-content-between">
+							<span class="font-semibold">Daily Snapshot</span>
+							<span class="text-600 text-sm">Live</span>
+						</div>
+					</ng-template>
+					<div class="grid">
+						<div class="col-12 md:col-6">
+							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
+								<div>
+									<p class="m-0 text-600">Check-ins</p>
+									<h3 class="m-0">42</h3>
+								</div>
+								<i class="pi pi-user-plus text-2xl text-primary"></i>
+							</div>
+						</div>
+						<div class="col-12 md:col-6">
+							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
+								<div>
+									<p class="m-0 text-600">Messages</p>
+									<h3 class="m-0">128</h3>
+								</div>
+								<i class="pi pi-comments text-2xl text-primary"></i>
+							</div>
+						</div>
+						<div class="col-12 md:col-6">
+							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
+								<div>
+									<p class="m-0 text-600">Invoices</p>
+									<h3 class="m-0">BDN 5.3k</h3>
+								</div>
+								<i class="pi pi-credit-card text-2xl text-primary"></i>
+							</div>
+						</div>
+						<div class="col-12 md:col-6">
+							<div class="flex align-items-center justify-content-between border-round surface-50 p-3">
+								<div>
+									<p class="m-0 text-600">Staff</p>
+									<h3 class="m-0">12 on duty</h3>
+								</div>
+								<i class="pi pi-briefcase text-2xl text-primary"></i>
+							</div>
+						</div>
+					</div>
+				</p-card>
+			</div>
+		</div>
+	</div>
+
+	<p-divider></p-divider>
+
+	<!-- Logos / social proof -->
+	<div class="px-3 md:px-6 lg:px-8 py-4">
+		<div class="text-center text-600">Trusted by centers and parents</div>
+		<div class="flex flex-wrap align-items-center justify-content-center gap-5 mt-3">
+			<img src="assets/partners/bt.png" class="h-2rem opacity-80" alt="bt">
+			<img src="assets/partners/gny.png" class="h-2rem opacity-80" alt="gny">
+			<img src="assets/partners/tashicell.png" class="h-2rem opacity-80" alt="tc">
+			<img src="assets/partners/bob.svg" class="h-2rem opacity-80" alt="bob">
+			<img src="assets/partners/rma.png" class="h-2rem opacity-80" alt="rma">
+		</div>
+	</div>
+
+	<!-- Features -->
+	<div class="px-3 md:px-6 lg:px-8 py-6">
+		<div class="grid">
+			<div class="col-12 md:col-4">
+				<p-card class="h-full">
+					<div class="flex align-items-start gap-3">
+						<i class="pi pi-calendar text-3xl text-primary"></i>
+						<div>
+							<h3 class="m-0">Attendance & Check-in</h3>
+							<p class="m-0 text-700 mt-2">Fast kiosk check-in with secure codes and real-time rosters.</p>
+						</div>
+					</div>
+				</p-card>
+			</div>
+			<div class="col-12 md:col-4">
+				<p-card class="h-full">
+					<div class="flex align-items-start gap-3">
+						<i class="pi pi-credit-card text-3xl text-primary"></i>
+						<div>
+							<h3 class="m-0">Billing & Invoicing</h3>
+							<p class="m-0 text-700 mt-2">Automate tuition, accept online payments, and reconcile with ease.</p>
+						</div>
+					</div>
+				</p-card>
+			</div>
+			<div class="col-12 md:col-4">
+				<p-card class="h-full">
+					<div class="flex align-items-start gap-3">
+						<i class="pi pi-comments text-3xl text-primary"></i>
+						<div>
+							<h3 class="m-0">Parent Messaging</h3>
+							<p class="m-0 text-700 mt-2">Share updates, photos, and reminders securely with families.</p>
+						</div>
+					</div>
+				</p-card>
+			</div>
+		</div>
+	</div>
+
+	<!-- Testimonial / CTA -->
+	<div class="px-3 md:px-6 lg:px-8 py-6">
+		<p-card>
+			<div class="grid align-items-center">
+				<div class="col-12 md:col-8">
+					<p class="text-xl md:text-2xl m-0">“We spend less time on admin and more time with children. The app is intuitive for our staff and parents alike.”</p>
+					<p class="mt-2 text-700">Center Director, Happy Kids</p>
+				</div>
+				<div class="col-12 md:col-4 flex align-items-center justify-content-end gap-2">
+					<a routerLink="/auth/login" pButton label="Login" class="p-button-outlined"></a>
+					<button pButton label="Get a demo" (click)="openDemo()"></button>
+				</div>
+			</div>
+		</p-card>
+	</div>
+
+	<!-- Footer -->
+	<div class="px-3 md:px-6 lg:px-8 py-5 surface-50">
+		<div class="flex flex-column md:flex-row align-items-center justify-content-between gap-3">
+			<div class="flex align-items-center gap-2">
+				<img src="assets/logo/zhidhay.svg" alt="Logo" class="h-2rem">
+				<span class="font-semibold">Zhidhay</span>
+			</div>
+			<div class="flex gap-3 text-600">
+			<a routerLink="/privacy" class="no-underline text-600 hover:text-primary">Privacy</a>
+			<span>•</span>
+			<span>© {{ year }}</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Demo Dialog -->
+	<p-dialog [(visible)]="demoVisible" [modal]="true" [style]="{width: '35rem'}" header="Request a demo">
+		<div class="grid formgrid">
+			<div class="field col-12 md:col-6">
+				<label class="block mb-2">Name</label>
+				<input pInputText [(ngModel)]="demoForm.name" placeholder="Your name" />
+			</div>
+			<div class="field col-12 md:col-6">
+				<label class="block mb-2">Email</label>
+				<input pInputText [(ngModel)]="demoForm.email" placeholder="you@example.com" />
+			</div>
+			<div class="field col-12 md:col-6">
+				<label class="block mb-2">Center / Organization</label>
+				<input pInputText [(ngModel)]="demoForm.center" placeholder="Center name" />
+			</div>
+			<div class="field col-12 md:col-6">
+				<label class="block mb-2">Phone</label>
+				<input pInputText [(ngModel)]="demoForm.phone" placeholder="Phone (optional)" />
+			</div>
+			<div class="field col-12">
+				<label class="block mb-2">What would you like to see?</label>
+				<textarea pInputTextarea rows="3" [(ngModel)]="demoForm.message" placeholder="Tell us about your needs"></textarea>
+			</div>
+		</div>
+		<ng-template pTemplate="footer">
+			<div class="flex justify-content-end gap-2">
+				<button pButton label="Cancel" class="p-button-text" (click)="demoVisible=false"></button>
+				<button pButton label="Send request" [loading]="submitting" (click)="submitDemo()"></button>
+			</div>
+		</ng-template>
+	</p-dialog>
+</div>
