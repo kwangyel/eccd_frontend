@@ -13,6 +13,10 @@ import { LandingV2Component } from './landing-v2/landing-v2.component';
         RouterModule.forChild([
             {
                 path: '',
+                component: LandingComponent
+            },
+            {
+                path: 'v2',
                 component: LandingV2Component
             },
             // {
@@ -29,10 +33,10 @@ import { LandingV2Component } from './landing-v2/landing-v2.component';
             },
             {
                 path: 'application/:applicationId',
-                component:ApplicationFormComponent
+                component: ApplicationFormComponent
             }
         ]),
     ],
     exports: [RouterModule],
 })
-export class PublicRoutingModule {}
+export class PublicRoutingModule { }
