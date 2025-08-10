@@ -6,13 +6,14 @@ import { PublicRentalListingsComponent } from './public-rental-listings/public-r
 import { BrandZhidhayComponent } from './brand-zhidhay/brand-zhidhay.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { LandingComponent } from './landing/landing.component';
+import { LandingV2Component } from './landing-v2/landing-v2.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
             {
                 path: '',
-                component: LandingComponent
+                component: LandingV2Component
             },
             // {
             //     path: 'launch',
