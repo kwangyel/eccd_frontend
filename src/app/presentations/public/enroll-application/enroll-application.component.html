@@ -1,1 +1,584 @@
-<p>enroll-application works!</p>
+<!-- Header Section -->
+<div class="grid p-0 m-0">
+  <div class="col-1 hidden md:block"></div>
+  <div class="col-12 md:col-10 flex justify-content-between align-items-center py-3">
+    <div class="flex align-items-center gap-2 font-semibold">
+      <img src="assets/logo/zhidhay.svg" class="w-4rem" alt="Zhidhay Logo" />
+      <div class="flex flex-column justify-content-between">
+        <p class="text-3xl font-bold m-0">ZHIDHAY</p>
+        <p class="text-sm m-0">Early Childhood Care & Development</p>
+      </div>
+    </div>
+    <div class="flex align-items-center gap-2">
+      <p-button 
+        label="Back to Home" 
+        text="true" 
+        (click)="goHome()"
+        severity="secondary"
+        icon="pi pi-arrow-left">
+      </p-button>
+    </div>
+  </div>
+  <div class="col-1 hidden md:block"></div>
+</div>
+
+<!-- Main Content -->
+<div class="grid">
+  <div class="col-1 hidden lg:block"></div>
+  <div class="col-12 lg:col-10">
+    
+    <!-- Page Title -->
+    <div class="text-center mb-5">
+      <h1 class="text-4xl font-bold text-900 mb-2">Child Enrollment Application</h1>
+      <p class="text-lg text-600">Please complete all steps to enroll your child in our ECCD program</p>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="isSubmitted" class="mb-4">
+      <p-card class="border-1 border-green-200 bg-green-50">
+        <div class="flex align-items-center gap-3">
+          <i class="pi pi-check-circle text-green-600 text-3xl"></i>
+          <div>
+            <h3 class="text-green-800 font-semibold m-0 mb-2">Application Submitted Successfully!</h3>
+            <p class="text-green-700 m-0">We have received your enrollment application. Our team will review it and contact you within 2-3 business days with the next steps.</p>
+            <p-button 
+              label="Submit Another Application" 
+              class="mt-3"
+              severity="secondary"
+              size="small"
+              (click)="isSubmitted = false; currentStep = 0; enrollmentForm.reset()">
+            </p-button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <!-- Application Form -->
+    <div *ngIf="!isSubmitted">
+      <!-- Stepper -->
+      <div class="mb-5">
+        <p-steps 
+          [model]="steps" 
+          [activeIndex]="currentStep"
+          [readonly]="true"
+          class="custom-steps">
+        </p-steps>
+      </div>
+
+      <!-- Messages -->
+      <p-messages 
+        *ngIf="messages.length > 0" 
+        [value]="messages" 
+        [closable]="true"
+        class="mb-4">
+      </p-messages>
+
+      <!-- Form Container -->
+      <p-card class="shadow-2">
+        <form [formGroup]="enrollmentForm" (ngSubmit)="submitApplication()">
+          
+          <!-- Step 1: Child Information -->
+          <div *ngIf="currentStep === 0" class="fade-in">
+            <h2 class="text-2xl font-semibold text-900 mb-4 border-bottom-2 border-primary pb-2">
+              <i class="pi pi-user text-primary mr-2"></i>Child Information
+            </h2>
+            
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <label for="childName" class="block text-900 font-medium mb-2">
+                  Child's Full Name <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="childName"
+                  formControlName="childName"
+                  placeholder="Enter child's full name"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('childName')" />
+                <small *ngIf="isFieldInvalid('childName')" class="text-red-500">
+                  {{ getFieldError('childName') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="dateOfBirth" class="block text-900 font-medium mb-2">
+                  Date of Birth <span class="text-red-500">*</span>
+                </label>
+                <p-calendar 
+                  formControlName="dateOfBirth"
+                  placeholder="Select date of birth"
+                  [showIcon]="true"
+                  inputId="dateOfBirth"
+                  class="w-full"
+                  [maxDate]="maxDate"
+                  [class.ng-invalid]="isFieldInvalid('dateOfBirth')">
+                </p-calendar>
+                <small *ngIf="isFieldInvalid('dateOfBirth')" class="text-red-500">
+                  {{ getFieldError('dateOfBirth') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label class="block text-900 font-medium mb-3">
+                  Gender <span class="text-red-500">*</span>
+                </label>
+                <div class="flex gap-4">
+                  <div *ngFor="let gender of genderOptions" class="flex align-items-center">
+                    <p-radioButton 
+                      [inputId]="gender.value"
+                      name="gender"
+                      [value]="gender.value"
+                      formControlName="gender">
+                    </p-radioButton>
+                    <label [for]="gender.value" class="ml-2 cursor-pointer">{{ gender.label }}</label>
+                  </div>
+                </div>
+                <small *ngIf="isFieldInvalid('gender')" class="text-red-500">
+                  {{ getFieldError('gender') }}
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <label for="medicalConditions" class="block text-900 font-medium mb-2">
+                  Medical Conditions
+                </label>
+                <textarea 
+                  pInputTextarea 
+                  id="medicalConditions"
+                  formControlName="medicalConditions"
+                  placeholder="Please list any medical conditions or special needs"
+                  rows="3"
+                  class="w-full">
+                </textarea>
+              </div>
+              
+              <div class="col-12">
+                <label for="allergies" class="block text-900 font-medium mb-2">
+                  Allergies
+                </label>
+                <textarea 
+                  pInputTextarea 
+                  id="allergies"
+                  formControlName="allergies"
+                  placeholder="Please list any known allergies (food, environmental, etc.)"
+                  rows="3"
+                  class="w-full">
+                </textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Parent/Guardian Information -->
+          <div *ngIf="currentStep === 1" class="fade-in">
+            <h2 class="text-2xl font-semibold text-900 mb-4 border-bottom-2 border-primary pb-2">
+              <i class="pi pi-users text-primary mr-2"></i>Parent/Guardian Information
+            </h2>
+            
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <label for="parentName" class="block text-900 font-medium mb-2">
+                  Full Name <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="parentName"
+                  formControlName="parentName"
+                  placeholder="Enter your full name"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('parentName')" />
+                <small *ngIf="isFieldInvalid('parentName')" class="text-red-500">
+                  {{ getFieldError('parentName') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="relationship" class="block text-900 font-medium mb-2">
+                  Relationship to Child <span class="text-red-500">*</span>
+                </label>
+                <p-dropdown 
+                  formControlName="relationship"
+                  [options]="relationshipOptions"
+                  placeholder="Select relationship"
+                  optionLabel="label"
+                  optionValue="value"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('relationship')">
+                </p-dropdown>
+                <small *ngIf="isFieldInvalid('relationship')" class="text-red-500">
+                  {{ getFieldError('relationship') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="cid" class="block text-900 font-medium mb-2">
+                  Citizenship ID (CID) <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="cid"
+                  formControlName="cid"
+                  placeholder="Enter 11-digit CID number"
+                  class="w-full"
+                  maxlength="11"
+                  [class.ng-invalid]="isFieldInvalid('cid')" />
+                <small *ngIf="isFieldInvalid('cid')" class="text-red-500">
+                  {{ getFieldError('cid') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="phoneNumber" class="block text-900 font-medium mb-2">
+                  Phone Number <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="phoneNumber"
+                  formControlName="phoneNumber"
+                  placeholder="Enter 8-digit phone number"
+                  class="w-full"
+                  maxlength="8"
+                  [class.ng-invalid]="isFieldInvalid('phoneNumber')" />
+                <small *ngIf="isFieldInvalid('phoneNumber')" class="text-red-500">
+                  {{ getFieldError('phoneNumber') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="email" class="block text-900 font-medium mb-2">
+                  Email Address <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="email"
+                  formControlName="email"
+                  placeholder="Enter email address"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('email')" />
+                <small *ngIf="isFieldInvalid('email')" class="text-red-500">
+                  {{ getFieldError('email') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="occupation" class="block text-900 font-medium mb-2">
+                  Occupation <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="occupation"
+                  formControlName="occupation"
+                  placeholder="Enter your occupation"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('occupation')" />
+                <small *ngIf="isFieldInvalid('occupation')" class="text-red-500">
+                  {{ getFieldError('occupation') }}
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <label for="address" class="block text-900 font-medium mb-2">
+                  Home Address <span class="text-red-500">*</span>
+                </label>
+                <textarea 
+                  pInputTextarea 
+                  id="address"
+                  formControlName="address"
+                  placeholder="Enter complete home address"
+                  rows="3"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('address')">
+                </textarea>
+                <small *ngIf="isFieldInvalid('address')" class="text-red-500">
+                  {{ getFieldError('address') }}
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <label for="workplaceContact" class="block text-900 font-medium mb-2">
+                  Workplace Contact (Optional)
+                </label>
+                <input 
+                  pInputText 
+                  id="workplaceContact"
+                  formControlName="workplaceContact"
+                  placeholder="Enter workplace name and phone number"
+                  class="w-full" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Emergency Contact -->
+          <div *ngIf="currentStep === 2" class="fade-in">
+            <h2 class="text-2xl font-semibold text-900 mb-4 border-bottom-2 border-primary pb-2">
+              <i class="pi pi-phone text-primary mr-2"></i>Emergency Contact Information
+            </h2>
+            
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <label for="emergencyContactName" class="block text-900 font-medium mb-2">
+                  Emergency Contact Name <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="emergencyContactName"
+                  formControlName="emergencyContactName"
+                  placeholder="Enter emergency contact name"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('emergencyContactName')" />
+                <small *ngIf="isFieldInvalid('emergencyContactName')" class="text-red-500">
+                  {{ getFieldError('emergencyContactName') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="emergencyRelationship" class="block text-900 font-medium mb-2">
+                  Relationship <span class="text-red-500">*</span>
+                </label>
+                <p-dropdown 
+                  formControlName="emergencyRelationship"
+                  [options]="relationshipOptions"
+                  placeholder="Select relationship"
+                  optionLabel="label"
+                  optionValue="value"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('emergencyRelationship')">
+                </p-dropdown>
+                <small *ngIf="isFieldInvalid('emergencyRelationship')" class="text-red-500">
+                  {{ getFieldError('emergencyRelationship') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="emergencyPhone" class="block text-900 font-medium mb-2">
+                  Emergency Phone Number <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  pInputText 
+                  id="emergencyPhone"
+                  formControlName="emergencyPhone"
+                  placeholder="Enter 8-digit phone number"
+                  class="w-full"
+                  maxlength="8"
+                  [class.ng-invalid]="isFieldInvalid('emergencyPhone')" />
+                <small *ngIf="isFieldInvalid('emergencyPhone')" class="text-red-500">
+                  {{ getFieldError('emergencyPhone') }}
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <p-divider></p-divider>
+                <h3 class="text-lg font-medium text-700 mb-3">Alternate Emergency Contact (Optional)</h3>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="alternateEmergencyName" class="block text-900 font-medium mb-2">
+                  Name
+                </label>
+                <input 
+                  pInputText 
+                  id="alternateEmergencyName"
+                  formControlName="alternateEmergencyName"
+                  placeholder="Enter alternate contact name"
+                  class="w-full" />
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="alternateEmergencyPhone" class="block text-900 font-medium mb-2">
+                  Phone Number
+                </label>
+                <input 
+                  pInputText 
+                  id="alternateEmergencyPhone"
+                  formControlName="alternateEmergencyPhone"
+                  placeholder="Enter 8-digit phone number"
+                  class="w-full"
+                  maxlength="8"
+                  [class.ng-invalid]="isFieldInvalid('alternateEmergencyPhone')" />
+                <small *ngIf="isFieldInvalid('alternateEmergencyPhone')" class="text-red-500">
+                  {{ getFieldError('alternateEmergencyPhone') }}
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Program & Preferences -->
+          <div *ngIf="currentStep === 3" class="fade-in">
+            <h2 class="text-2xl font-semibold text-900 mb-4 border-bottom-2 border-primary pb-2">
+              <i class="pi pi-calendar text-primary mr-2"></i>Program & Preferences
+            </h2>
+            
+            <div class="grid">
+              <div class="col-12">
+                <label for="programType" class="block text-900 font-medium mb-2">
+                  Program Type <span class="text-red-500">*</span>
+                </label>
+                <p-dropdown 
+                  formControlName="programType"
+                  [options]="programTypes"
+                  placeholder="Select program type"
+                  optionLabel="label"
+                  optionValue="value"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('programType')">
+                </p-dropdown>
+                <small *ngIf="isFieldInvalid('programType')" class="text-red-500">
+                  {{ getFieldError('programType') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="preferredStartDate" class="block text-900 font-medium mb-2">
+                  Preferred Start Date <span class="text-red-500">*</span>
+                </label>
+                <p-calendar 
+                  formControlName="preferredStartDate"
+                  placeholder="Select preferred start date"
+                  [showIcon]="true"
+                  inputId="preferredStartDate"
+                  class="w-full"
+                  [minDate]="minDate"
+                  [class.ng-invalid]="isFieldInvalid('preferredStartDate')">
+                </p-calendar>
+                <small *ngIf="isFieldInvalid('preferredStartDate')" class="text-red-500">
+                  {{ getFieldError('preferredStartDate') }}
+                </small>
+              </div>
+              
+              <div class="col-12 md:col-6">
+                <label for="preferredTimeslot" class="block text-900 font-medium mb-2">
+                  Preferred Time Slot <span class="text-red-500">*</span>
+                </label>
+                <p-dropdown 
+                  formControlName="preferredTimeslot"
+                  [options]="timeslotOptions"
+                  placeholder="Select preferred time slot"
+                  optionLabel="label"
+                  optionValue="value"
+                  class="w-full"
+                  [class.ng-invalid]="isFieldInvalid('preferredTimeslot')">
+                </p-dropdown>
+                <small *ngIf="isFieldInvalid('preferredTimeslot')" class="text-red-500">
+                  {{ getFieldError('preferredTimeslot') }}
+                </small>
+              </div>
+              
+              <div class="col-12">
+                <label for="specialRequests" class="block text-900 font-medium mb-2">
+                  Special Requests or Comments
+                </label>
+                <textarea 
+                  pInputTextarea 
+                  id="specialRequests"
+                  formControlName="specialRequests"
+                  placeholder="Any special requests, dietary requirements, or additional comments"
+                  rows="4"
+                  class="w-full">
+                </textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5: Consent & Review -->
+          <div *ngIf="currentStep === 4" class="fade-in">
+            <h2 class="text-2xl font-semibold text-900 mb-4 border-bottom-2 border-primary pb-2">
+              <i class="pi pi-check-circle text-primary mr-2"></i>Consent & Review
+            </h2>
+            
+            <div class="grid">
+              <div class="col-12">
+                <h3 class="text-lg font-medium text-900 mb-3">Required Consents</h3>
+                
+                <div class="flex align-items-start mb-3">
+                  <p-checkbox 
+                    formControlName="photoConsent"
+                    binary="true"
+                    inputId="photoConsent"
+                    [class.ng-invalid]="isFieldInvalid('photoConsent')">
+                  </p-checkbox>
+                  <label for="photoConsent" class="ml-2 cursor-pointer">
+                    <strong>Photo/Video Consent:</strong> I give permission for my child to be photographed/videoed during ECCD activities for educational and promotional purposes.
+                  </label>
+                </div>
+                
+                <div class="flex align-items-start mb-3">
+                  <p-checkbox 
+                    formControlName="medicalTreatmentConsent"
+                    binary="true"
+                    inputId="medicalTreatmentConsent"
+                    [class.ng-invalid]="isFieldInvalid('medicalTreatmentConsent')">
+                  </p-checkbox>
+                  <label for="medicalTreatmentConsent" class="ml-2 cursor-pointer">
+                    <strong>Medical Treatment Consent:</strong> I authorize the ECCD center to seek emergency medical treatment for my child if I cannot be reached immediately.
+                  </label>
+                </div>
+                
+                <div class="flex align-items-start mb-3">
+                  <p-checkbox 
+                    formControlName="dataProcessingConsent"
+                    binary="true"
+                    inputId="dataProcessingConsent"
+                    [class.ng-invalid]="isFieldInvalid('dataProcessingConsent')">
+                  </p-checkbox>
+                  <label for="dataProcessingConsent" class="ml-2 cursor-pointer">
+                    <strong>Data Processing Consent:</strong> I consent to the collection and processing of personal data provided in this application for enrollment and educational purposes.
+                  </label>
+                </div>
+                
+                <div class="flex align-items-start mb-4">
+                  <p-checkbox 
+                    formControlName="termsAccepted"
+                    binary="true"
+                    inputId="termsAccepted"
+                    [class.ng-invalid]="isFieldInvalid('termsAccepted')">
+                  </p-checkbox>
+                  <label for="termsAccepted" class="ml-2 cursor-pointer">
+                    <strong>Terms & Conditions:</strong> I have read and agree to the ECCD center's terms and conditions, policies, and procedures.
+                  </label>
+                </div>
+                
+                <div class="bg-blue-50 border-1 border-blue-200 border-round p-3 mb-4">
+                  <h4 class="text-blue-900 font-semibold mb-2">Application Summary</h4>
+                  <p class="text-blue-800 m-0">
+                    Please review all information before submitting. Once submitted, you will receive a confirmation and our team will contact you within 2-3 business days regarding enrollment status and next steps.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="flex justify-content-between align-items-center pt-4 border-top-1 border-300 mt-4">
+            <p-button 
+              *ngIf="currentStep > 0"
+              label="Previous" 
+              severity="secondary"
+              icon="pi pi-arrow-left"
+              (click)="previousStep()">
+            </p-button>
+            <div *ngIf="currentStep === 0"></div>
+            
+            <div class="flex gap-2">
+              <p-button 
+                *ngIf="currentStep < steps.length - 1"
+                label="Next" 
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (click)="nextStep()">
+              </p-button>
+              
+              <p-button 
+                *ngIf="currentStep === steps.length - 1"
+                label="Submit Application" 
+                icon="pi pi-check"
+                [loading]="isSubmitting"
+                type="submit">
+              </p-button>
+            </div>
+          </div>
+          
+        </form>
+      </p-card>
+    </div>
+  </div>
+  <div class="col-1 hidden lg:block"></div>
+</div>

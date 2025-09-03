@@ -7,6 +7,7 @@ import { BrandZhidhayComponent } from './brand-zhidhay/brand-zhidhay.component';
 import { ApplicationFormComponent } from './application-form/application-form.component';
 import { LandingComponent } from './landing/landing.component';
 import { LandingV2Component } from './landing-v2/landing-v2.component';
+import { EnrollApplicationComponent } from './enroll-application/enroll-application.component';
 
 @NgModule({
     imports: [
@@ -34,6 +35,10 @@ import { LandingV2Component } from './landing-v2/landing-v2.component';
             {
                 path: 'application/:applicationId',
                 component: ApplicationFormComponent
+            },
+            {
+                path: 'enroll',
+                component: EnrollApplicationComponent
             }
         ]),
     ],

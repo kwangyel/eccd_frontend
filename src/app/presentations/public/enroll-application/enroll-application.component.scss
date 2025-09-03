@@ -1,0 +1,61 @@
+// Fade in animation for step transitions
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Custom steps styling
+::ng-deep .custom-steps {
+  .p-steps-item {
+    .p-steps-number {
+      background-color: var(--surface-200);
+      color: var(--text-color-secondary);
+      border: 2px solid var(--surface-200);
+    }
+    
+    &.p-highlight .p-steps-number {
+      background-color: var(--primary-color);
+      color: var(--primary-color-text);
+      border-color: var(--primary-color);
+    }
+  }
+}
+
+// Ensure proper spacing for form elements
+.p-field {
+  margin-bottom: 1rem;
+}
+
+// Error state styling
+.ng-invalid.ng-touched {
+  border-color: var(--red-500) !important;
+  box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25) !important;
+}
+
+// Success message styling
+.success-banner {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border: 1px solid #10b981;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .p-steps {
+    .p-steps-item .p-steps-title {
+      font-size: 0.75rem;
+    }
+  }
+}
