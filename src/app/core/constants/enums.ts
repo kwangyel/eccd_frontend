@@ -11,6 +11,15 @@ export enum ProductType {
     'SERVICE' = 'SERVICE',
     'OTHER' = 'OTHER',
 }
+
+export enum ERPInvoiceStatus {
+    'DRAFT' = 'DRAFT',
+    'DUE' = 'DUE',
+    'PAID' = 'PAID',
+    'PARTIAL_PAID' = 'PARTIAL_PAID',
+    'CANCELLED' = 'CANCELLED'
+}
+
 export enum FacilityStatus {
     'ACTIVE' = 'ACTIVE',
     'INACTIVE' = 'INACTIVE',
