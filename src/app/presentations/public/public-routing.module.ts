@@ -6,6 +6,7 @@ import { ApplicationFormComponent } from './application-form/application-form.co
 import { LandingComponent } from './landing/landing.component';
 import { LandingV2Component } from './landing-v2/landing-v2.component';
 import { EnrollApplicationComponent } from './enroll-application/enroll-application.component';
+import { EnrollPaymentsComponent } from './enroll-payments/enroll-payments.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,10 @@ import { EnrollApplicationComponent } from './enroll-application/enroll-applicat
             {
                 path: 'enroll',
                 component: EnrollApplicationComponent
+            },
+            {
+                path: 'payments',
+                component: EnrollPaymentsComponent
             }
         ]),
     ],

@@ -5,6 +5,15 @@ export enum USERROLESENUM {
     'SUPERADMIN' = 'SUPERADMIN',
     'MANAGER' = 'MANAGER',
 }
+export const PaymentState = {
+    INITIAL: "INITIAL",
+    AE_REQUESTED: "AE_REQUESTED",
+    AE_APPROVED: "AE_APPROVED",
+    AE_REJECTED: "AE_REJECTED",
+    DR_REQUESTED: "DR_REQUESTED",
+    DR_APPROVED: "DR_APPROVED",
+    DR_REJECTED: "DR_REJECTED",
+  }
 
 export enum LEASETYPE {
     'LAND' = 'LAND',
