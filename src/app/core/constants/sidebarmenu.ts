@@ -76,7 +76,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Products',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-lease/lands'],
+                routerLink: ['/admin/master-product'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {
