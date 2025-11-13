@@ -7,7 +7,7 @@ export interface ERPInvoiceDTO {
     invoiceDate: Date;
     invoiceNumber: string;
     invoiceStatus: ERPInvoiceStatus;
-    dueDate: string;
+    dueDate: Date;
     totalAmount: number;
     customerId: number;
     customer: CustomerDTO;

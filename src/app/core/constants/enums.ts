@@ -32,7 +32,7 @@ export const PaymentState = {
     DR_REQUESTED: "DR_REQUESTED",
     DR_APPROVED: "DR_APPROVED",
     DR_REJECTED: "DR_REJECTED",
-  }
+}
 
 export enum LEASETYPE {
     'LAND' = 'LAND',

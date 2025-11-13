@@ -1,0 +1,36 @@
+<div>
+    <div class="flex justify-content-between my-4">
+        <p class="text-xl">Product Master Table</p>
+        <div class="flex gap-2">
+            <p-button
+                label="Add Invoice"
+                icon="pi pi-plus"
+                (click)="openAddInvoiceModal()"
+                size="small"
+            ></p-button>
+        </div>
+    </div>
+
+    <p-table [value]="invoices" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Invoice Number</th>
+                <th>Invoice Date</th>
+                <th>Invoice Status</th>
+                <th>Due Date</th>
+                <th>Total Amount</th>
+                <th>Customer</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{ item.invoiceNumber }}</td>
+                <td>{{ item.invoiceDate | date : "mediumDate" }}</td>
+                <td>{{ item.invoiceStatus }}</td>
+                <td>{{ item.dueDate | date : "mediumDate" }}</td>
+                <td>{{ item.totalAmount }}</td>
+                <td>{{ item.customer.user.nameEnglish }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

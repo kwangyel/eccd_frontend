@@ -82,7 +82,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Invoices',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-lease/buildings'],
+                routerLink: ['/admin/master-product/invoices'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {
