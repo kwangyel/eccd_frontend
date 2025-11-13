@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { UserDTO } from 'src/app/core/dataservice/users-and-auth/dto/user.dto';
+import { FacilityStatus } from 'src/app/core/constants/enums';
+import { FacilitatorDTO, UserDTO } from 'src/app/core/dataservice/users-and-auth/dto/user.dto';
 
 @Component({
   selector: 'app-master-facilitator',
@@ -12,7 +13,7 @@ import { UserDTO } from 'src/app/core/dataservice/users-and-auth/dto/user.dto';
   styleUrl: './master-facilitator.component.scss'
 })
 export class AdminFacilitatorComponent {
-  facilitators: UserDTO[] = [
+  facilitators: FacilitatorDTO[] = [
     {
       id: 1,
       nameEnglish: 'Facilitator 1',
@@ -20,7 +21,19 @@ export class AdminFacilitatorComponent {
       email: 'facilitator1@gmail.com',
       phoneNumber: 1234567890,
       avatarUri: 'assets/images/avatar.png',
-      hasLoginAccess: false
+      hasLoginAccess: false,
+      facilityId: 0,
+      facility: {
+        id: 0,
+        name: 'Facility 1',
+        description: '',
+        address: '',
+        latitude: 0,
+        longitude: 0,
+        status: FacilityStatus.ACTIVE,
+        capacity: 0,
+        ownerId: 0
+      }
     },
     {
       id: 2,
@@ -29,7 +42,19 @@ export class AdminFacilitatorComponent {
       email: 'facilitator2@gmail.com',
       phoneNumber: 1234567890,
       avatarUri: 'assets/images/avatar.png',
-      hasLoginAccess: false
+      hasLoginAccess: false,
+      facilityId: 1,
+      facility: {
+        id: 1,
+        name: 'Facility 1',
+        description: '',
+        address: '',
+        latitude: 0,
+        longitude: 0,
+        status: FacilityStatus.ACTIVE,
+        capacity: 0,
+        ownerId: 0
+      }
     },
   ];
 

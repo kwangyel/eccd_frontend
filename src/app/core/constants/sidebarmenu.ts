@@ -65,7 +65,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Students',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-properties/plots'],
+                routerLink: ['/admin/master-users/students'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
         ],

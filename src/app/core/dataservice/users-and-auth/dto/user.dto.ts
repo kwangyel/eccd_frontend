@@ -1,3 +1,4 @@
+import { FacilityDTO } from 'src/app/core/dto/facility/facility.dto';
 import { ThramDTO } from '../../land/dto/thram.dto';
 import { OrganiztionDTO } from '../../organization/organization.dto';
 
@@ -21,6 +22,11 @@ export interface UserDTO {
 
     organizations?: OrganiztionDTO[];
     avatarUri?: string;
+}
+
+export interface FacilitatorDTO extends UserDTO {
+    facilityId: number;
+    facility?: FacilityDTO;
 }
 
 export interface CreateUserDTO {

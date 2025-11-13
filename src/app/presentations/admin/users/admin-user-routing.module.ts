@@ -4,8 +4,13 @@ import { AdminOwnerListingComponent } from './admin-owner-listing/admin-owner-li
 import { AdminTenantListingComponent } from './admin-tenant-listing/admin-tenant-listing.component';
 import { AdminManagerListingComponent } from './admin-manager-listing/admin-manager-listing.component';
 import { AdminTenantDetailedViewComponent } from './admin-tenant-detailed-view/admin-tenant-detailed-view.component';
+import { MasterStudentComponent } from './master-student/master-student.component';
 
 const routes: Routes = [
+    {
+        path: 'students',
+        component: MasterStudentComponent
+    },
     {
         path: 'managers',
         component: AdminManagerListingComponent,
