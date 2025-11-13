@@ -3,14 +3,7 @@
         <div class="flex gap-4 my-4 justify-content-between align-items-end">
             <p>
                 Welcome {{ authenticatedUser.nameEnglish }}
-                {{ authenticatedUser.nameDzongkha }}
             </p>
-            <p-button
-                label="Broadcast SMS"
-                severity="secondary"
-                icon="pi pi-envelope"
-                (click)="openBroadcastSmsModal()"
-            ></p-button>
         </div>
         <p-divider type="dashed"></p-divider>
 
