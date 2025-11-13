@@ -5,6 +5,12 @@ export enum USERROLESENUM {
     'SUPERADMIN' = 'SUPERADMIN',
     'MANAGER' = 'MANAGER',
 }
+
+export enum ProductType {
+    'GOODS' = 'GOODS',
+    'SERVICE' = 'SERVICE',
+    'OTHER' = 'OTHER',
+}
 export enum FacilityStatus {
     'ACTIVE' = 'ACTIVE',
     'INACTIVE' = 'INACTIVE',
