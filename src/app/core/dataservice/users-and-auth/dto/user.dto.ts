@@ -20,6 +20,7 @@ export interface UserDTO {
     thrams?: ThramDTO[];
 
     organizations?: OrganiztionDTO[];
+    avatarUri?: string;
 }
 
 export interface CreateUserDTO {
@@ -36,6 +37,7 @@ export interface CreateUserDTO {
     adminId?: number;
 
     role: string;
+    avatarUri?: string;
 }
 
 export interface UpdateUserDetailsDTO {

@@ -59,7 +59,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Facilitators',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-properties/thrams'],
+                routerLink: ['/admin/master-facilitator'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {

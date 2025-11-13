@@ -1,0 +1,41 @@
+<div>
+    <div class="flex justify-content-between my-4">
+        <p class="text-xl">Facilitator Master Table</p>
+        <div class="flex gap-2">
+            <p-button
+                label="Facility"
+                icon="pi pi-plus"
+                (click)="openAddFacilitatorModal()"
+                size="small"
+            ></p-button>
+        </div>
+    </div>
+
+    <p-table [value]="facilitators" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>CID</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Profile Picture</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{ item.nameEnglish }}</td>
+                <td>{{ item.cid }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phoneNumber }}</td>
+                <td>
+                    <p-image
+                        [src]="item.avatarUri"
+                        alt="Avatar"
+                        width="32"
+                        height="32"
+                    />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
