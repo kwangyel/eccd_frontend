@@ -5,6 +5,10 @@ export enum USERROLESENUM {
     'SUPERADMIN' = 'SUPERADMIN',
     'MANAGER' = 'MANAGER',
 }
+export enum FacilityStatus {
+    'ACTIVE' = 'ACTIVE',
+    'INACTIVE' = 'INACTIVE',
+}
 export const PaymentState = {
     INITIAL: "INITIAL",
     AE_REQUESTED: "AE_REQUESTED",

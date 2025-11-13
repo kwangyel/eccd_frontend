@@ -9,7 +9,8 @@ export const environment = {
         databaseURL: 'https://zhidhay-iot-default-rtdb.asia-southeast1.firebasedatabase.app',
         projectId: 'zhidhay-iot'
     },
-    API_URL: 'http://localhost:3000',
+    API_URL: 'https://www.zhidhay.com/api',
+    // API_URL: 'http://localhost:3000',
 };
 
 /*
