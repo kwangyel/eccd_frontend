@@ -20,6 +20,13 @@ export enum ERPInvoiceStatus {
     'CANCELLED' = 'CANCELLED'
 }
 
+export enum ERPPaymentStatus {
+    'DRAFT' = 'DRAFT',
+    'PAID' = 'PAID',
+    'RECONCILED' = 'RECONCILED',
+    'CANCELLED' = 'CANCELLED'
+}
+
 export enum FacilityStatus {
     'ACTIVE' = 'ACTIVE',
     'INACTIVE' = 'INACTIVE',
