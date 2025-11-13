@@ -53,7 +53,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Centers',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-users/owners'],
+                routerLink: ['/admin/master-facility'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {

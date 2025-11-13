@@ -12,4 +12,7 @@ export interface StudentDTO {
     parent?: ParentDTO;
     facilityId: number;
     facility?: FacilityDTO;
+    medicalConditions?: string;
+    allergies?: string;
+    avatarUri?: string;
 }

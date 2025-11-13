@@ -40,6 +40,13 @@ import { PrivacyComponent } from './privacy/privacy.component';
                     },
                     children: [
                         {
+                            path: 'master-facility',
+                            loadChildren: () =>
+                                import(
+                                    './presentations/admin/facility/admin-facility.routing.modules'
+                                ).then((m) => m.AdminMasterFacilityRoutingModule),
+                        },
+                        {
                             path: '',
                             loadChildren: () =>
                                 import(
