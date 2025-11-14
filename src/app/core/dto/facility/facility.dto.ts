@@ -12,3 +12,12 @@ export interface FacilityDTO {
     ownerId: number;
     directorId?:number;
 }
+
+export interface ClassRoomDTO {
+    id: number;
+    name: string;
+    description: string;
+    capacity: number;
+    facilityId: number;
+    facility?: FacilityDTO;
+}
