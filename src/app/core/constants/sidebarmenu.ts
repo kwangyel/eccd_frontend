@@ -129,19 +129,19 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Balance Sheet',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-users/managers'],
+                routerLink: ['/admin/reports/balance-sheet'],
                 roles: [USERROLESENUM.ADMIN],
             },
             {
                 label: 'Profit and Loss',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-users/managers'],
+                routerLink: ['/admin/reports/profit-and-loss'],
                 roles: [USERROLESENUM.ADMIN],
             },
             {
                 label: 'Tax Reports',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-users/managers'],
+                routerLink: ['/admin/reports/tax-reports'],
                 roles: [USERROLESENUM.ADMIN],
             }
         ],

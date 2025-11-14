@@ -61,6 +61,13 @@ import { PrivacyComponent } from './privacy/privacy.component';
                                 ).then((m) => m.AdminVendorRoutingModule),
                         },
                         {
+                            path: 'reports',
+                            loadChildren: () =>
+                                import(
+                                    './presentations/admin/reports/admin-report-routing.module'
+                                ).then((m) => m.AdminReportRoutingModule),
+                        },
+                        {
                             path: 'master-facility',
                             loadChildren: () =>
                                 import(
