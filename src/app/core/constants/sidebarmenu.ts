@@ -57,6 +57,12 @@ export const ADMINSIDEBARITEMS = [
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {
+                label: 'Classrooms',
+                icon: 'pi pi-fw pi-th-large',
+                routerLink: ['/admin/master-facility/classrooms'],
+                roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
+            },
+            {
                 label: 'Facilitators',
                 icon: 'pi pi-fw pi-th-large',
                 routerLink: ['/admin/master-facilitator'],
