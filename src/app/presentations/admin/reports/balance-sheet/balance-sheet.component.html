@@ -1,1 +1,141 @@
-<p>balance-sheet works!</p>
+<section class="balance-sheet">
+  <header class="balance-sheet__header">
+    <div>
+      <h1>Balance Sheet</h1>
+      <p>As of {{ asOfDateLabel | date: 'MMMM d, y' }}</p>
+    </div>
+
+    <div class="balance-sheet__actions">
+      <label for="balance-sheet-date">Reporting date</label>
+      <input
+        id="balance-sheet-date"
+        type="date"
+        [(ngModel)]="asOfDate"
+        aria-label="Balance sheet date"
+      />
+      <button type="button" (click)="refreshBalanceSheet()">Refresh</button>
+    </div>
+  </header>
+
+  <section class="balance-sheet__summary">
+    <article>
+      <span>Total Assets</span>
+      <strong>{{ totalAssets | currency: 'USD':'symbol-narrow' }}</strong>
+      <small>Must equal liabilities + equity</small>
+    </article>
+
+    <article>
+      <span>Total Liabilities &amp; Equity</span>
+      <strong>{{ totalLiabilitiesAndEquity | currency: 'USD':'symbol-narrow' }}</strong>
+      <small>Liabilities: {{ totalLiabilities | currency: 'USD':'symbol-narrow' }}</small>
+    </article>
+
+    <article>
+      <span>Working Capital</span>
+      <strong>{{ workingCapital | currency: 'USD':'symbol-narrow' }}</strong>
+      <small>Current assets - current liabilities</small>
+    </article>
+
+    <article>
+      <span>Debt / Equity</span>
+      <strong>{{ debtToEquityRatio | number: '1.2-2' }}</strong>
+      <small>Lower is healthier</small>
+    </article>
+  </section>
+
+  <div
+    class="balance-sheet__variance"
+    *ngIf="balanceVariance !== 0"
+    role="alert"
+  >
+    Imbalance detected: {{ balanceVariance | currency: 'USD':'symbol-narrow' }}
+  </div>
+
+  <section class="balance-sheet__grid">
+    <div class="balance-sheet__column">
+      <h2>Assets</h2>
+
+      <ng-container *ngFor="let section of assets">
+        <h3>{{ section.label }}</h3>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Subtotal</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+    </div>
+
+    <div class="balance-sheet__column">
+      <h2>Liabilities &amp; Equity</h2>
+
+      <ng-container *ngFor="let section of liabilities">
+        <h3>{{ section.label }}</h3>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Subtotal</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+
+      <ng-container *ngFor="let section of equity">
+        <h3>{{ section.label }}</h3>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Subtotal</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+    </div>
+  </section>
+</section>
