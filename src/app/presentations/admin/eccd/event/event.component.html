@@ -3,21 +3,6 @@
         <h2>Event Calendar</h2>
         <p-calendar [(ngModel)]="selectedDate" (onSelect)="onDateChange($event)" [inline]="true" [showIcon]="true"
             dateFormat="yy-mm-dd" inputId="event-calendar" [style]="{ width: '100%' }">
-            <ng-template pTemplate="date" let-date="date">
-                <div class="custom-date-cell" [class.has-event]="hasEvents(date)">
-                    <span class="day-number">{{ date.getDate() }}</span>
-
-                    <!-- event badges: show up to 2 small dots and +n if more -->
-                    <div class="event-dots" *ngIf="eventsOn(date).length">
-                        <span class="dot" *ngFor="let e of eventsOn(date) | slice:0:2" pTooltip="{{ e.title }}"
-                            tooltipPosition="top"></span>
-                        <span class="more" *ngIf="eventsOn(date).length > 2" pTooltip="{{ eventsOn(date) | mapTitles }}"
-                            tooltipPosition="top">
-                            +{{ eventsOn(date).length - 2 }}
-                        </span>
-                    </div>
-                </div>
-            </ng-template>
         </p-calendar>
         <button type="button" class="reset-btn" (click)="startCreate()">
             New Event
