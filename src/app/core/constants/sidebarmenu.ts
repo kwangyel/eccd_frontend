@@ -58,7 +58,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Events',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-facility'],
+                routerLink: ['/admin/eccd/event'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             }
         ],
