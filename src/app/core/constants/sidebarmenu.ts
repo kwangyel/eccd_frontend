@@ -94,13 +94,13 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Customers',
                 icon: 'pi pi-fw pi-search',
-                // routerLink: ['/admin/master-lease/search'],
+                routerLink: ['/admin/master-product/customers'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
         ],
     },
     {
-        label: 'Payments',
+        label: 'Vendors',
         items: [
             {
                 label: 'Bills',
