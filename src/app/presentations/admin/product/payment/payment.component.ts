@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 import { ERPPaymentMethod, ERPPaymentStatus } from 'src/app/core/constants/enums';
 import { ERPPaymentDTO } from 'src/app/core/dto/product/payments.dto';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [],
+  imports: [TableModule, ButtonModule, CommonModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.scss'
 })
@@ -14,6 +17,10 @@ export class PaymentComponent {
 
   ngOnInit(): void {
     this.getPayments();
+  }
+
+  openAddPaymentModal(): void {
+    console.log('openAddPaymentModal');
   }
 
   getPayments(): void {
@@ -31,8 +38,10 @@ export class PaymentComponent {
           id: 1,
           userId: 1,
           user: {
+            id: 1,
             phoneNumber: 0,
-            role: ''
+            nameEnglish: 'John Doe',
+            hasLoginAccess: false
           },
         },
         parentId: 1,
@@ -50,8 +59,10 @@ export class PaymentComponent {
           id: 1,
           userId: 1,
           user: {
+            id: 1,
             phoneNumber: 0,
-            role: ''
+            nameEnglish: 'John Doe',
+            hasLoginAccess: false
           },
         },
         parentId: 1,

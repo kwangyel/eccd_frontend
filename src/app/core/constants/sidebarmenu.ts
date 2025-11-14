@@ -88,7 +88,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Payments',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-lease/units'],
+                routerLink: ['/admin/master-product/payments'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {
@@ -241,7 +241,7 @@ export const OWNERSIDEBARITEMS = [
             {
                 label: 'Payments',
                 icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/owner/payments/list-building'],
+                routerLink: ['/owner/payments/payments'],
             },
             {
                 label: 'Tax Reports',
