@@ -152,46 +152,46 @@ export const ADMINSIDEBARITEMS = [
             }
         ],
     },
-    {
-        label: 'Users',
-        items: [
-            {
-                label: 'Center Director',
-                icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/master-users/managers'],
-                roles: [USERROLESENUM.ADMIN],
-            },
-            {
-                label: 'Facilitator',
-                icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/master-users/tenants'],
-                roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
-            },
-        ],
-    },
-    {
-        label: 'System',
-        items: [
-            {
-                label: 'Roles',
-                icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/master-roles'],
-                roles: [USERROLESENUM.ADMIN],
-            },
-            {
-                label: 'Bank Accounts',
-                icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/master-bank-accounts'],
-                roles: [USERROLESENUM.ADMIN],
-            },
-            {
-                label: 'Setttings',
-                icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/system-settings'],
-                roles: [USERROLESENUM.ADMIN],
-            },
-        ],
-    },
+    // {
+    //     label: 'Users',
+    //     items: [
+    //         {
+    //             label: 'Center Director',
+    //             icon: 'pi pi-fw pi-th-large',
+    //             routerLink: ['/admin/master-users/managers'],
+    //             roles: [USERROLESENUM.ADMIN],
+    //         },
+    //         {
+    //             label: 'Facilitator',
+    //             icon: 'pi pi-fw pi-th-large',
+    //             routerLink: ['/admin/master-users/tenants'],
+    //             roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
+    //         },
+    //     ],
+    // },
+    // {
+    //     label: 'System',
+    //     items: [
+    //         {
+    //             label: 'Roles',
+    //             icon: 'pi pi-fw pi-th-large',
+    //             routerLink: ['/admin/master-roles'],
+    //             roles: [USERROLESENUM.ADMIN],
+    //         },
+    //         {
+    //             label: 'Bank Accounts',
+    //             icon: 'pi pi-fw pi-th-large',
+    //             routerLink: ['/admin/master-bank-accounts'],
+    //             roles: [USERROLESENUM.ADMIN],
+    //         },
+    //         {
+    //             label: 'Setttings',
+    //             icon: 'pi pi-fw pi-th-large',
+    //             routerLink: ['/admin/system-settings'],
+    //             roles: [USERROLESENUM.ADMIN],
+    //         },
+    //     ],
+    // },
 ];
 
 export const OWNERSIDEBARITEMS = [

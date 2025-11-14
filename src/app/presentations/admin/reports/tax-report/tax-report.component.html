@@ -1,1 +1,163 @@
-<p>tax-report works!</p>
+<section class="tax-report">
+  <header class="tax-report__header">
+    <div>
+      <h1>Tax Compliance Report</h1>
+      <p>Assessment Year {{ reportingYear }}</p>
+    </div>
+
+    <div class="tax-report__filters">
+      <label for="tax-year">Year</label>
+      <input
+        id="tax-year"
+        type="number"
+        [(ngModel)]="reportingYear"
+        min="2020"
+        max="2099"
+        aria-label="Tax assessment year"
+      />
+
+      <label for="tax-jurisdiction">Jurisdiction</label>
+      <select
+        id="tax-jurisdiction"
+        [(ngModel)]="jurisdictionFilter"
+        aria-label="Jurisdiction filter"
+      >
+        <option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction">
+          {{ jurisdiction }}
+        </option>
+      </select>
+
+      <button type="button" (click)="refreshReport()">Refresh</button>
+    </div>
+  </header>
+
+  <section class="tax-report__summary">
+    <article>
+      <span>Total Liabilities</span>
+      <strong>{{ totalLiabilities | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Outstanding: {{ outstandingBalance | currency: 'BTN ':'symbol-narrow' }}</small>
+    </article>
+
+    <article>
+      <span>Total Payments</span>
+      <strong>{{ totalPayments | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Coverage: {{ payoutCoverage | number: '1.1-1' }} months</small>
+    </article>
+
+    <article>
+      <span>Net Tax Due</span>
+      <strong>{{ netTaxDue | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Overdue exposure: {{ overdueExposure | currency: 'BTN ':'symbol-narrow' }}</small>
+    </article>
+
+    <article>
+      <span>Compliance Score</span>
+      <strong>{{ complianceScore | percent: '1.0-1' }}</strong>
+      <small>Filed vs scheduled returns</small>
+    </article>
+  </section>
+
+  <section class="tax-report__grid">
+    <article class="tax-report__panel">
+      <header>
+        <h2>Liability Register</h2>
+        <span>{{ filteredLiabilities.length }} records</span>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Jurisdiction</th>
+            <th>Tax Type</th>
+            <th>Period</th>
+            <th class="align-right">Amount</th>
+            <th>Due</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let liability of filteredLiabilities; trackBy: trackByLiability">
+            <td>{{ liability.jurisdiction }}</td>
+            <td>{{ liability.taxType | titlecase }}</td>
+            <td>{{ liability.period }}</td>
+            <td class="align-right">
+              {{ liability.amount | currency: 'BTN ':'symbol-narrow' }}
+            </td>
+            <td>{{ liability.dueDate | date: 'MMM d, y' }}</td>
+            <td>
+              <span class="status-pill" [class]="liability.status">
+                {{ liability.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="tax-report__panel">
+      <header>
+        <h2>Recent Payments</h2>
+        <span>{{ taxPayments.length }} confirmations</span>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Tax Type</th>
+            <th>Method</th>
+            <th>Confirmation</th>
+            <th class="align-right">Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of taxPayments; trackBy: trackByPayment">
+            <td>{{ payment.reference }}</td>
+            <td>{{ payment.taxType | titlecase }}</td>
+            <td>{{ payment.method }}</td>
+            <td>{{ payment.confirmationId }}</td>
+            <td class="align-right">
+              {{ payment.amount | currency: 'BTN ':'symbol-narrow' }}
+            </td>
+            <td>{{ payment.paymentDate | date: 'MMM d, y' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+
+  <section class="tax-report__grid">
+    <article class="tax-report__panel">
+      <header>
+        <h2>Filing Calendar</h2>
+        <span>{{ filingSchedules.length }} active forms</span>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Form</th>
+            <th>Tax Type</th>
+            <th>Frequency</th>
+            <th>Next Due</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let schedule of filingSchedules; trackBy: trackBySchedule">
+            <td>{{ schedule.form }}</td>
+            <td>{{ schedule.taxType | titlecase }}</td>
+            <td>{{ schedule.frequency }}</td>
+            <td>{{ schedule.nextDueDate | date: 'MMM d, y' }}</td>
+            <td>
+              <span class="status-pill" [class]="schedule.status">
+                {{ schedule.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+</section>
