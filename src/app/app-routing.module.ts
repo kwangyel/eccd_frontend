@@ -40,6 +40,13 @@ import { PrivacyComponent } from './privacy/privacy.component';
                     },
                     children: [
                         {
+                            path: 'eccd',
+                            loadChildren: () =>
+                                import(
+                                    './presentations/admin/eccd/admin-eccd-routing.module'
+                                ).then((m) => m.AdminEccdRoutingModule),
+                        },
+                        {
                             path: 'master-facilitator',
                             loadChildren: () =>
                                 import(

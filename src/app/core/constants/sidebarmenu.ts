@@ -41,7 +41,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Dashboard',
                 icon: 'pi pi-fw pi-home',
-                routerLink: ['/admin'],
+                routerLink: ['/admin/eccd'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
         ],
