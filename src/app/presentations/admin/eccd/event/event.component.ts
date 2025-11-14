@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-event',
@@ -8,5 +11,4 @@ import { Component } from '@angular/core';
   styleUrl: './event.component.scss'
 })
 export class EventComponent {
-
 }
