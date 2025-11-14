@@ -52,7 +52,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Applications',
                 icon: 'pi pi-fw pi-th-large',
-                // routerLink: ['/admin/master-facility'],
+                routerLink: ['/admin/eccd/application'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {

@@ -27,6 +27,15 @@ export enum ERPPaymentStatus {
     'CANCELLED' = 'CANCELLED'
 }
 
+export enum ApplicationStatus {
+    'PENDING' = 'PENDING',
+    'APPROVED' = 'APPROVED',
+    'REJECTED' = 'REJECTED',
+    'CANCELLED' = 'CANCELLED',
+    'EXPIRED' = 'EXPIRED',
+    'ONGOING' = 'ONGOING',
+}
+
 export enum ERPBillStatus {
     'DRAFT' = 'DRAFT',
     'DUE'="DUE",
