@@ -1,1 +1,127 @@
-<p>pl-statement works!</p>
+<section class="pl-statement">
+  <header class="pl-statement__header">
+    <div>
+      <h1>Profit &amp; Loss Statement</h1>
+      <p>Reporting period: {{ periodLabel }}</p>
+    </div>
+
+    <div class="pl-statement__actions">
+      <label for="pl-start-date">Start</label>
+      <input
+        id="pl-start-date"
+        type="date"
+        [(ngModel)]="reportingPeriod.start"
+        aria-label="P/L start date"
+      />
+
+      <label for="pl-end-date">End</label>
+      <input
+        id="pl-end-date"
+        type="date"
+        [(ngModel)]="reportingPeriod.end"
+        aria-label="P/L end date"
+      />
+
+      <button type="button" (click)="refreshStatement()">Refresh</button>
+    </div>
+  </header>
+
+  <section class="pl-statement__summary">
+    <article>
+      <span>Total Revenue</span>
+      <strong>{{ totalRevenue | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Operating: {{ operatingRevenue | currency: 'BTN ':'symbol-narrow' }}</small>
+    </article>
+
+    <article>
+      <span>Gross Profit</span>
+      <strong>{{ grossProfit | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Gross margin: {{ grossMargin | percent: '1.1-2' }}</small>
+    </article>
+
+    <article>
+      <span>Operating Income</span>
+      <strong>{{ operatingIncome | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>EBITDA: {{ ebitda | currency: 'BTN ':'symbol-narrow' }}</small>
+    </article>
+
+    <article>
+      <span>Net Income</span>
+      <strong>{{ netIncome | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Net margin: {{ netMargin | percent: '1.1-2' }}</small>
+    </article>
+  </section>
+
+  <section class="pl-statement__grid">
+    <div class="pl-statement__column">
+      <h2>Revenue</h2>
+
+      <ng-container *ngFor="let section of revenueSections">
+        <h3>{{ section.label }}</h3>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Subtotal</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+    </div>
+
+    <div class="pl-statement__column">
+      <h2>Expenses</h2>
+
+      <ng-container *ngFor="let section of expenseSections">
+        <h3>{{ section.label }}</h3>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Subtotal</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+
+      <div class="pl-statement__totals">
+        <div>
+          <span>Total Expenses</span>
+          <strong>{{ totalExpenses | currency: 'BTN ':'symbol-narrow' }}</strong>
+        </div>
+        <div>
+          <span>Net Other Income</span>
+          <strong>{{ netOtherIncome | currency: 'BTN ':'symbol-narrow' }}</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
