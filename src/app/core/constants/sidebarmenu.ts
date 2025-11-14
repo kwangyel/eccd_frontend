@@ -105,13 +105,13 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Bills',
                 icon: 'pi pi-fw pi-file-excel',
-                // routerLink: [ '/admin/master-transactions/building/rent/monthly', ],
+                routerLink: ['/admin/master-vendor/bills'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {
                 label: 'Payments',
                 icon: 'pi pi-fw pi-file-excel',
-                // routerLink: [ '/admin/master-transactions/building/security-deposits', ],
+                routerLink: ['/admin/master-product/payments'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             },
             {

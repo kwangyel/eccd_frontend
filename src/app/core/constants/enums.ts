@@ -29,6 +29,7 @@ export enum ERPPaymentStatus {
 
 export enum ERPBillStatus {
     'DRAFT' = 'DRAFT',
+    'DUE'="DUE",
     'PAID' = 'PAID',
     'PARTIAL_PAID' = 'PARTIAL_PAID',
     'CANCELLED' = 'CANCELLED'
