@@ -1,4 +1,6 @@
-import { ERPPaymentStatus } from "../../constants/enums";
+import { ERPPaymentMethod, ERPPaymentStatus } from "../../constants/enums";
+import { UserDTO } from "../../dataservice/users-and-auth/dto/user.dto";
+import { ParentDTO } from "../users/parent.dto";
 
 export interface ERPPaymentDTO {
     id: number;
@@ -6,9 +8,11 @@ export interface ERPPaymentDTO {
     isReceive: boolean;
     paymentDate: Date;
     paymentNumber: string;
+    paymentMethod: ERPPaymentMethod;
     paymentStatus: ERPPaymentStatus;
     paymentAmount: number;
-    paymentMethod: string;
-    paymentReference: string;
-    paymentReferenceNumber: string;
+    paymentReference?: string;
+    parent: ParentDTO;
+    parentId: number;
+    invoiceId?: number;
 }

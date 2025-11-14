@@ -27,6 +27,21 @@ export enum ERPPaymentStatus {
     'CANCELLED' = 'CANCELLED'
 }
 
+export enum ERPBillStatus {
+    'DRAFT' = 'DRAFT',
+    'PAID' = 'PAID',
+    'PARTIAL_PAID' = 'PARTIAL_PAID',
+    'CANCELLED' = 'CANCELLED'
+}
+
+export enum ERPPaymentMethod {
+    'CASH' = 'CASH',
+    'BANK_TRANSFER' = 'BANK_TRANSFER',
+    'CHEQUE' = 'CHEQUE',
+    'PAYMENT_GATEWAY' = 'PAYMENT_GATEWAY',
+    'APP_PAYMENT' = 'APP_PAYMENT',
+}
+
 export enum FacilityStatus {
     'ACTIVE' = 'ACTIVE',
     'INACTIVE' = 'INACTIVE',
