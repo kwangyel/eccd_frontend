@@ -117,7 +117,7 @@ export const ADMINSIDEBARITEMS = [
             {
                 label: 'Vendors',
                 icon: 'pi pi-fw pi-file-excel',
-                // routerLink: ['/admin/master-transactions/land/rent-monthly'],
+                routerLink: ['/admin/master-vendor/vendors'],
                 roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
             }
         ],
