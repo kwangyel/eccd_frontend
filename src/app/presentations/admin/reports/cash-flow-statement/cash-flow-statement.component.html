@@ -1,1 +1,87 @@
-<p>cash-flow-statement works!</p>
+<section class="cash-flow">
+  <header class="cash-flow__header">
+    <div>
+      <h1>Cash Flow Statement</h1>
+      <p>Reporting period: {{ periodLabel }}</p>
+    </div>
+
+    <div class="cash-flow__actions">
+      <label for="cf-start-date">Start</label>
+      <input
+        id="cf-start-date"
+        type="date"
+        [(ngModel)]="reportingPeriod.start"
+        aria-label="Cash flow start date"
+      />
+
+      <label for="cf-end-date">End</label>
+      <input
+        id="cf-end-date"
+        type="date"
+        [(ngModel)]="reportingPeriod.end"
+        aria-label="Cash flow end date"
+      />
+
+      <button type="button" (click)="refreshStatement()">Refresh</button>
+    </div>
+  </header>
+
+  <section class="cash-flow__summary">
+    <article>
+      <span>Opening Cash</span>
+      <strong>{{ openingCashBalance | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Balance at period start</small>
+    </article>
+
+    <article>
+      <span>Operating Cash Flow</span>
+      <strong>{{ operatingCashFlow | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Core operations</small>
+    </article>
+
+    <article>
+      <span>Net Cash Flow</span>
+      <strong>{{ netCashFlow | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Operating + Investing + Financing</small>
+    </article>
+
+    <article>
+      <span>Ending Cash</span>
+      <strong>{{ endingCashBalance | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Coverage: {{ cashCoverageRatio | number: '1.1-1' }} months</small>
+    </article>
+  </section>
+
+  <section class="cash-flow__grid">
+    <ng-container *ngFor="let section of sections">
+      <article class="cash-flow__card">
+        <header>
+          <h2>{{ section.label }}</h2>
+          <span>{{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}</span>
+        </header>
+
+        <table>
+          <tbody>
+            <tr *ngFor="let line of section.lines; trackBy: trackByAccount">
+              <td>
+                {{ line.account }}
+                <small *ngIf="line.note">({{ line.note }})</small>
+              </td>
+              <td class="amount">
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Net {{ section.label }}</td>
+              <td class="amount">
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </article>
+    </ng-container>
+  </section>
+</section>
