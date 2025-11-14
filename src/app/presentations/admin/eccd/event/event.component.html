@@ -1,0 +1,99 @@
+<div class="event-calendar grid">
+  <section class="calendar-panel col-6 flex flex-column">
+    <h2>Event Calendar</h2>
+    <p-calendar
+      [(ngModel)]="selectedDate"
+      (onSelect)="onDateChange($event)"
+      [inline]="true"
+      [showIcon]="true"
+      dateFormat="yy-mm-dd"
+      inputId="event-calendar"
+      [style]="{ width: '100%' }"
+    ></p-calendar>
+    <button type="button" class="reset-btn" (click)="startCreate()">
+      New Event
+    </button>
+  </section>
+
+  <section class="events-panel col-5">
+    <header class="panel-header">
+      <div>
+        <p class="panel-label">Events on</p>
+        <p class="panel-date">{{ selectedDate | date: 'fullDate' }}</p>
+      </div>
+      <span class="event-count">{{ eventsForSelectedDate.length }} total</span>
+    </header>
+
+    <ng-container *ngIf="eventsForSelectedDate.length; else emptyState">
+      <article class="event-card" *ngFor="let event of eventsForSelectedDate">
+        <div class="event-card__content">
+          <h3>{{ event.title }}</h3>
+          <p class="event-time">
+            <span *ngIf="event.startTime">{{ event.startTime }}</span>
+            <span *ngIf="event.startTime && event.endTime">–</span>
+            <span *ngIf="event.endTime">{{ event.endTime }}</span>
+          </p>
+          <p class="event-description" *ngIf="event.description">
+            {{ event.description }}
+          </p>
+        </div>
+        <div class="event-card__actions">
+          <button type="button" (click)="startEdit(event)">Edit</button>
+          <button type="button" class="danger" (click)="deleteEvent(event.id)">
+            Delete
+          </button>
+        </div>
+      </article>
+    </ng-container>
+
+    <ng-template #emptyState>
+      <p class="empty-state">No events scheduled for this day.</p>
+    </ng-template>
+
+    <form class="event-form" [formGroup]="eventForm" (ngSubmit)="submit()">
+      <h3>{{ editingEventId ? 'Update Event' : 'Create Event' }}</h3>
+
+      <label class="form-field">
+        <span>Title *</span>
+        <input type="text" formControlName="title" placeholder="Event name" />
+        <small *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched">
+          Title is required.
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span>Date *</span>
+        <p-calendar
+          formControlName="date"
+          [showIcon]="true"
+          inputId="event-date"
+          dateFormat="yy-mm-dd"
+        ></p-calendar>
+      </label>
+
+      <div class="form-field form-row">
+        <label>
+          <span>Start time</span>
+          <input type="time" formControlName="startTime" />
+        </label>
+        <label>
+          <span>End time</span>
+          <input type="time" formControlName="endTime" />
+        </label>
+      </div>
+
+      <label class="form-field">
+        <span>Description</span>
+        <textarea formControlName="description" rows="3" placeholder="Optional details"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button type="submit">{{ editingEventId ? 'Save changes' : 'Add event' }}</button>
+        <button type="button" class="ghost" (click)="startCreate()" *ngIf="editingEventId">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+
