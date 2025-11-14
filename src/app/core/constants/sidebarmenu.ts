@@ -46,6 +46,23 @@ export const ADMINSIDEBARITEMS = [
             },
         ],
     },
+    {
+        label:'Admin',
+        items: [
+            {
+                label: 'Applications',
+                icon: 'pi pi-fw pi-th-large',
+                // routerLink: ['/admin/master-facility'],
+                roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
+            },
+            {
+                label: 'Events',
+                icon: 'pi pi-fw pi-th-large',
+                // routerLink: ['/admin/master-facility'],
+                roles: [USERROLESENUM.ADMIN, USERROLESENUM.MANAGER],
+            }
+        ],
+    },
 
     {
         label: 'Facilities',
