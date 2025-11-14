@@ -1,1 +1,226 @@
-<p>dashboard works!</p>
+<section class="eccd-dashboard">
+  <header class="eccd-dashboard__header">
+    <div>
+      <h1>Center Operations Dashboard</h1>
+      <p>ERP overview for childcare programs</p>
+    </div>
+
+    <div class="eccd-dashboard__controls">
+      <label>
+        Center
+        <select [(ngModel)]="selectedCenter" aria-label="Select childcare center">
+          <option *ngFor="let center of centers" [value]="center">{{ center }}</option>
+        </select>
+      </label>
+
+      <label>
+        Reporting Date
+        <input
+          type="date"
+          [(ngModel)]="reportingDate"
+          aria-label="Reporting snapshot date"
+        />
+      </label>
+
+      <button type="button" (click)="refreshDashboard()">Refresh</button>
+    </div>
+  </header>
+
+  <section class="eccd-dashboard__kpi">
+    <article *ngFor="let card of kpiCards">
+      <span>{{ card.label }}</span>
+      <strong>
+        <ng-container *ngIf="card.unit === '%'">{{ card.value | number: '1.0-0' }}%</ng-container>
+        <ng-container *ngIf="card.unit === 'kids'">{{ card.value }}</ng-container>
+        <ng-container *ngIf="card.unit === 'families'">{{ card.value }}</ng-container>
+        <ng-container *ngIf="!card.unit && card.label === 'Monthly Revenue'">
+          {{ card.value | currency: 'BTN ':'symbol-narrow' }}
+        </ng-container>
+        <ng-container *ngIf="!card.unit && card.label !== 'Monthly Revenue'">{{ card.value }}</ng-container>
+      </strong>
+      <small>{{ card.subtitle }}</small>
+      <div class="trend" *ngIf="card.trend !== undefined">
+        <span [class.positive]="card.trend >= 0" [class.negative]="card.trend < 0">
+          {{ card.trend | number: '1.1-1' }}%
+        </span>
+        vs prior month
+      </div>
+    </article>
+  </section>
+
+  <section class="eccd-dashboard__grid">
+    <article class="panel">
+      <header>
+        <h2>Classroom Capacity</h2>
+        <div>
+          <strong>{{ utilization | number: '1.0-1' }}%</strong>
+          <small>Overall utilization</small>
+        </div>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Lead</th>
+            <th>Enrolled / Cap</th>
+            <th>Waitlist</th>
+            <th>Next Ratio Check</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of classrooms; trackBy: trackByRoom">
+            <td>
+              {{ room.name }}
+              <small>{{ occupancyPercent(room) }}% utilized</small>
+            </td>
+            <td>{{ room.leadTeacher }}</td>
+            <td>{{ room.enrolled }} / {{ room.capacity }}</td>
+            <td>
+              {{ room.waitlist }}
+              <small *ngIf="room.waitlist > 8">Action recommended</small>
+            </td>
+            <td>{{ room.nextRatioCheck | date: 'MMM d, h:mm a' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="panel">
+      <header>
+        <h2>Billing &amp; Receivables</h2>
+        <div>
+          <strong>{{ overdueInvoices }}</strong>
+          <small>Overdue accounts</small>
+        </div>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Family</th>
+            <th>Plan</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th class="align-right">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bill of billingSummary; trackBy: trackByBill">
+            <td>
+              {{ bill.family }}
+              <small *ngIf="bill.note">{{ bill.note }}</small>
+            </td>
+            <td>{{ bill.plan }}</td>
+            <td>{{ bill.dueDate | date: 'MMM d' }}</td>
+            <td>
+              <span class="status-pill" [class]="bill.status">{{ bill.status }}</span>
+            </td>
+            <td class="align-right">
+              {{ bill.balance | currency: 'BTN ':'symbol-narrow' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+
+  <section class="eccd-dashboard__grid">
+    <article class="panel">
+      <header>
+        <h2>Staff Coverage</h2>
+        <div>
+          <strong>{{ staffOnsite }}</strong>
+          <small>On-site team</small>
+        </div>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Staff</th>
+            <th>Role</th>
+            <th>Shift</th>
+            <th>Room</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let staff of staffShifts; trackBy: trackByStaff">
+            <td>{{ staff.name }}</td>
+            <td>{{ staff.role }}</td>
+            <td>{{ staff.shift }}</td>
+            <td>{{ staff.room }}</td>
+            <td>
+              <span class="status-pill" [class]="staff.status">{{ staff.status }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="panel">
+      <header>
+        <h2>Compliance &amp; Licensing</h2>
+        <div>
+          <strong>{{ complianceCompletion | number: '1.0-0' }}%</strong>
+          <small>Checklist completion</small>
+        </div>
+      </header>
+
+      <ul class="compliance-list">
+        <li *ngFor="let item of complianceItems; trackBy: trackByCompliance">
+          <div>
+            <strong>{{ item.title }}</strong>
+            <small>{{ item.category }} • Owner: {{ item.owner }}</small>
+          </div>
+          <div class="compliance-meta">
+            <span>{{ item.dueDate | date: 'MMM d' }}</span>
+            <span class="status-pill" [class]="item.status">{{ item.status }}</span>
+          </div>
+        </li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="eccd-dashboard__grid">
+    <article class="panel">
+      <header>
+        <h2>Upcoming Events</h2>
+        <div>
+          <strong>{{ upcomingEvents.length }}</strong>
+          <small>Within next week</small>
+        </div>
+      </header>
+
+      <ul class="event-list">
+        <li *ngFor="let event of upcomingEvents; trackBy: trackByEvent">
+          <div>
+            <strong>{{ event.title }}</strong>
+            <small>{{ event.classroom }} • {{ event.type | titlecase }}</small>
+          </div>
+          <div>
+            <span>{{ event.date | date: 'EEE, MMM d' }}</span>
+            <span>{{ event.time }}</span>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article class="panel quick-actions">
+      <header>
+        <h2>Quick Actions</h2>
+        <small>Common ERP workflows</small>
+      </header>
+
+      <div class="action-grid">
+        <button type="button">Log Incident</button>
+        <button type="button">Add Enrollment</button>
+        <button type="button">Run Billing</button>
+        <button type="button">Schedule Tour</button>
+        <button type="button">Request Supplies</button>
+        <button type="button">Broadcast Message</button>
+      </div>
+    </article>
+  </section>
+</section>
