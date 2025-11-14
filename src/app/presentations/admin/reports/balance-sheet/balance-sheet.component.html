@@ -20,19 +20,19 @@
   <section class="balance-sheet__summary">
     <article>
       <span>Total Assets</span>
-      <strong>{{ totalAssets | currency: 'USD':'symbol-narrow' }}</strong>
+      <strong>{{ totalAssets | currency: 'BTN ':'symbol-narrow' }}</strong>
       <small>Must equal liabilities + equity</small>
     </article>
 
     <article>
       <span>Total Liabilities &amp; Equity</span>
-      <strong>{{ totalLiabilitiesAndEquity | currency: 'USD':'symbol-narrow' }}</strong>
-      <small>Liabilities: {{ totalLiabilities | currency: 'USD':'symbol-narrow' }}</small>
+      <strong>{{ totalLiabilitiesAndEquity | currency: 'BTN ':'symbol-narrow' }}</strong>
+      <small>Liabilities: {{ totalLiabilities | currency: 'BTN ':'symbol-narrow' }}</small>
     </article>
 
     <article>
       <span>Working Capital</span>
-      <strong>{{ workingCapital | currency: 'USD':'symbol-narrow' }}</strong>
+      <strong>{{ workingCapital | currency: 'BTN ':'symbol-narrow' }}</strong>
       <small>Current assets - current liabilities</small>
     </article>
 
@@ -48,7 +48,7 @@
     *ngIf="balanceVariance !== 0"
     role="alert"
   >
-    Imbalance detected: {{ balanceVariance | currency: 'USD':'symbol-narrow' }}
+    Imbalance detected: {{ balanceVariance | currency: 'BTN ':'symbol-narrow' }}
   </div>
 
   <section class="balance-sheet__grid">
@@ -66,7 +66,7 @@
                 <small *ngIf="line.note">({{ line.note }})</small>
               </td>
               <td class="amount">
-                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tbody>
@@ -74,7 +74,7 @@
             <tr>
               <td>Subtotal</td>
               <td class="amount">
-                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tfoot>
@@ -96,7 +96,7 @@
                 <small *ngIf="line.note">({{ line.note }})</small>
               </td>
               <td class="amount">
-                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tbody>
@@ -104,7 +104,7 @@
             <tr>
               <td>Subtotal</td>
               <td class="amount">
-                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tfoot>
@@ -122,7 +122,7 @@
                 <small *ngIf="line.note">({{ line.note }})</small>
               </td>
               <td class="amount">
-                {{ line.amount | currency: 'USD':'symbol-narrow' }}
+                {{ line.amount | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tbody>
@@ -130,7 +130,7 @@
             <tr>
               <td>Subtotal</td>
               <td class="amount">
-                {{ sectionTotal(section) | currency: 'USD':'symbol-narrow' }}
+                {{ sectionTotal(section) | currency: 'BTN ':'symbol-narrow' }}
               </td>
             </tr>
           </tfoot>
