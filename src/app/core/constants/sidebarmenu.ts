@@ -139,9 +139,9 @@ export const ADMINSIDEBARITEMS = [
                 roles: [USERROLESENUM.ADMIN],
             },
             {
-                label: 'Tax Reports',
+                label: 'Cash Flow',
                 icon: 'pi pi-fw pi-th-large',
-                routerLink: ['/admin/reports/tax-reports'],
+                routerLink: ['/admin/reports/cash-flow'],
                 roles: [USERROLESENUM.ADMIN],
             }
         ],

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BalanceSheetComponent } from './balance-sheet/balance-sheet.component';
 import { PlStatementComponent } from './pl-statement/pl-statement.component';
-import { TaxReportComponent } from './tax-report/tax-report.component';
+import { CashFlowStatementComponent } from './cash-flow-statement/cash-flow-statement.component';
 
 const routes: Routes = [
     {
@@ -14,8 +14,8 @@ const routes: Routes = [
         component:PlStatementComponent
     },
     {
-        path: 'tax-reports',
-        component: TaxReportComponent
+        path: 'cash-flow',
+        component: CashFlowStatementComponent
     }
 ];
 
