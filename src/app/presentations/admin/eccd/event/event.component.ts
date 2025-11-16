@@ -126,7 +126,8 @@ export class EventComponent {
   }
 
   private toDateString(date: Date): string {
-    return date.toISOString().split('T')[0];
+    // Use local date methods to avoid timezone conversion issues
+    return this.toISODateString(date);
   }
 
   private isSameDay(dateString: string, date: Date): boolean {
@@ -141,7 +142,12 @@ export class EventComponent {
 
   eventsOn(date: Date): CalendarEvent[] {
     const key = this.toISODateString(date);
-    return this.events.filter(e => e.date === key);
+    const evnt = this.events.filter(e => e.date === key);
+    if(evnt.length > 0) {
+      console.log(evnt);
+      console.log(date);
+    }
+    return evnt;
   }
 
   private toISODateString(date: Date): string {
@@ -151,8 +157,10 @@ export class EventComponent {
     return `${y}-${m}-${d}`;
   }
 
-  hasEvents(date: Date): boolean {
-    return this.eventsOn(date).length > 0;
+  hasEvents(date:{day:number, month:number, year:number,otherMonth:boolean,today:boolean} ): boolean {
+    // Create date string directly from the calendar date object (no timezone conversion needed for date-only comparison)
+    const dateString = `${date.year}-${(date.month + 1).toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')}`;
+    return this.events.some(e => e.date === dateString);
   }
 
 }

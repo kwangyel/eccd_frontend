@@ -158,7 +158,7 @@ export class LoginComponent {
         const route =
             role.name === USERROLESENUM.ADMIN ||
             role.name === USERROLESENUM.MANAGER
-                ? '/admin'
+                ? '/admin/eccd'
                 : '/owner';
 
         if (route) {

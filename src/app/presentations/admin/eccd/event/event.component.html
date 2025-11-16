@@ -3,6 +3,10 @@
         <h2>Event Calendar</h2>
         <p-calendar [(ngModel)]="selectedDate" (onSelect)="onDateChange($event)" [inline]="true" [showIcon]="true"
             dateFormat="yy-mm-dd" inputId="event-calendar" [style]="{ width: '100%' }">
+            <ng-template pTemplate="date" let-date>
+                <span>{{ date.day }}</span>
+                <span *ngIf="hasEvents(date)">....</span>
+            </ng-template>
         </p-calendar>
         <button type="button" class="reset-btn" (click)="startCreate()">
             New Event

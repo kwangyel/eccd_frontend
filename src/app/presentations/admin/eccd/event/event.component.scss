@@ -26,6 +26,30 @@
     color: #fff;
     cursor: pointer;
   }
+
+  .calendar-date {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-weight: 500;
+    border-radius: 0.65rem;
+  }
+
+  .calendar-date__dot {
+    position: absolute;
+    bottom: 0.3rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: #2563eb;
+  }
+
+  .calendar-date--other-month {
+    opacity: 0.35;
+  }
 }
 
 .events-panel {
