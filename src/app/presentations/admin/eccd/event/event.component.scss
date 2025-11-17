@@ -36,19 +36,38 @@
     height: 2.5rem;
     font-weight: 500;
     border-radius: 0.65rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f1f5f9;
+    }
+
+    &--has-events {
+      background-color: #eff6ff;
+      color: #2563eb;
+      font-weight: 600;
+      border: 1px solid #bfdbfe;
+
+      &:hover {
+        background-color: #dbeafe;
+      }
+    }
+
+    &--other-month {
+      opacity: 0.35;
+    }
   }
 
   .calendar-date__dot {
     position: absolute;
-    bottom: 0.3rem;
-    width: 0.35rem;
-    height: 0.35rem;
+    bottom: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.4rem;
+    height: 0.4rem;
     border-radius: 999px;
     background: #2563eb;
-  }
-
-  .calendar-date--other-month {
-    opacity: 0.35;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
   }
 }
 

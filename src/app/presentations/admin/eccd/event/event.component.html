@@ -4,8 +4,10 @@
         <p-calendar [(ngModel)]="selectedDate" (onSelect)="onDateChange($event)" [inline]="true" [showIcon]="true"
             dateFormat="yy-mm-dd" inputId="event-calendar" [style]="{ width: '100%' }">
             <ng-template pTemplate="date" let-date>
-                <span>{{ date.day }}</span>
-                <span *ngIf="hasEvents(date)">....</span>
+                <div class="calendar-date" [class.calendar-date--has-events]="hasEvents(date)" [class.calendar-date--other-month]="date.otherMonth">
+                    <span>{{ date.day }}</span>
+                    <span class="calendar-date__dot" *ngIf="hasEvents(date)"></span>
+                </div>
             </ng-template>
         </p-calendar>
         <button type="button" class="reset-btn" (click)="startCreate()">

@@ -80,7 +80,6 @@ export class AdminTopbarComponent {
     ) {
         this.authenticatedUser = this.authService.GetAuthenticatedUser();
         this.currentRole = this.authService.GetCurrentRole();
-        this.isNotVerified = !Boolean(this.authenticatedUser.isVerified);
         if (this.currentRole.name === USERROLESENUM.ADMIN) {
             this.userService
                 .FindOneAuthenticated(this.authenticatedUser.id)

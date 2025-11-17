@@ -19,7 +19,6 @@ export interface AuthenticatedUserDTO {
     }[];
     exp: number;
     iat: number;
-    isVerified: number;
     userAuthId: number;
     nameEnglish: string;
     nameDzongkha: string;
